@@ -1,0 +1,251 @@
+:root {
+  --hoverColor: #c7ba7165;
+  --cellColor: #eee6b865;
+}
+
+body {
+  box-sizing: border-box;
+  margin-top: 15px;
+  background-color: #5c44179a;
+  font-family: 'Alef';
+  z-index: -1;
+}
+
+h1 {
+  text-align: center;
+  font-size: 32px;
+  text-decoration: underline;
+  text-decoration-color: #4a3a07bd;
+}
+
+table {
+  margin: auto;
+  width: 750px;
+  height: 80px;
+  text-align: center;
+  border: solid rgb(29, 28, 28) 4px;
+}
+
+table,
+td {
+  border-collapse: collapse;
+  padding: 10;
+  height: 80px;
+}
+
+td {
+  border: solid rgb(44, 16, 4) 2px;
+}
+
+.coloreado {
+  background-color: var(--cellColor);
+}
+
+input.inputCasilla {
+  width: 133.5%;
+  height: 133.5%;
+  margin-left: -10px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  -webkit-text-stroke: 2px black;
+  color: #c8bda1;
+  font-size: 40;
+  font-family: 'Alef';
+  text-align: center;
+  cursor: default;
+}
+
+input.inputCasilla:focus {
+  box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.267);
+  width: 133.5%;
+  height: 133.5%;
+  margin-left: -10px;
+  background-color: #c7ba71bc;
+  /*border: solid 0px black;*/
+}
+
+.limitador {
+  border-right: solid rgb(29, 28, 28) 4px;
+}
+
+.limitadorFilas {
+  border-bottom: solid rgb(29, 28, 28) 4px;
+}
+
+section div {
+  display: flex;
+  flex-direction: column;
+}
+
+h1{
+  gap: 30px;
+  margin-left: 25px;
+}
+
+@media only screen and (max-width: 768px) {
+  table {
+    min-width: 650px;
+  }
+}
+
+/* Patrón de fondo */
+#Pattern {
+  background-image: url("img/pattern-louis-vuitton2.png");
+  background-repeat: repeat;
+  background-size: 40%;
+}
+
+/* Columnas y filas marcadas (cruz) */
+.hover-row {
+  background-color: #c7ba7165;
+  border-right: solid #AC9A63 2px;
+  
+}
+
+.hover-column {
+  background-color: #c7ba7165;
+  border-bottom: solid #AC9A63 2px;
+  /*border-right: solid rgb(44, 16, 4) 2px;*/
+  
+}
+
+.hover-border-replace {
+  border-right: solid rgb(29, 28, 28) 4px;
+}
+
+/* Botones*/
+
+.boton {
+  cursor: pointer;
+  margin: auto;
+  background-color: var(--cellColor);
+  border: solid 4px black;
+  align-content: center;
+  text-align: center;
+  font-size: 22;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  -webkit-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  justify-content:space-around;
+}
+.boton:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #675b4d;
+  -webkit-transform: scaleY(0);
+  transform: scaleY(0);
+  -webkit-transform-origin: 50%;
+  transform-origin: 50%;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+  border-radius: 5px;
+}
+.boton:hover,
+.boton:focus,
+.boton:active {
+  color: #c8bda1;
+}
+.boton:hover:before,
+.boton:focus:before,
+.boton:active:before {
+  -webkit-transform: scaleY(1);
+  transform: scaleY(1);
+}
+
+
+
+
+
+/* Ajustes --> Contenedor row junto sudoku */
+
+.gap{
+  width: 293px;
+  /*background-color: blue;*/
+}
+
+.ajustesFlex{
+    display: flex;
+    flex-direction: row;
+    /*background-color: green;*/
+    height: 100px;
+    
+    
+}
+
+.ajustes {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 200px;
+    height: 48%;
+    /*background-color: purple;*/
+    top: 100px;
+    left: 357px;
+    
+   
+}
+
+.menu{
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu.active {
+  display: flex;
+}
+
+
+
+
+
+
+
+/* ICONOS IMAGENES */
+
+img {
+  width: 35px;
+  height: 35px;
+  
+
+}
+
+#settings{
+  margin-left: 9px;
+}
+
+.button{
+    display: flex;
+    flex-direction: row;
+    padding: 2px;
+    position: relative;
+    width: 33px;
+    height: 32px;
+    border: groove 4px black;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+    justify-content: center;
+    align-items: center;
+    
+}
