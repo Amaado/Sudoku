@@ -6,22 +6,17 @@ for (let i = 1; i <= 9; i++) {
         let celda = document.getElementById(i + "." + j);
 
         if (isNaN(input.value)) {
-          //input.style.backgroundColor = "#b82200a9";
           input.style.background = "url('img/redSpot.png') center no-repeat";
           input.style.backgroundSize = "cover";
 
-          //celda.style.zIndex=1;
+
         } else if (0 < input.value) {
           input.style.background = "";
-        } else {
-          //input.style.backgroundColor = "#45ff34ad";
 
+        } else {
           input.style.background = "url('img/greenSpot.png') center no-repeat";
           input.style.backgroundSize = "cover";
 
-          //input.style.color = "#c8bda177";
-          //input.style.color = "red";
-          //input.style.mixBlendMode = "";
         }
       };
   }
@@ -36,6 +31,7 @@ function restaurarHover() {
   cells.forEach(function (cell) {});
 }
 */
+
 
 /*
 function ForbidenInput(input) {

@@ -91,7 +91,7 @@ h1{
 
 /* Patrón de fondo */
 #Pattern {
-  background-image: url("img/pattern-louis-vuitton2.png");
+  background-image: url("img/pattern-louis-vuitton.png");
   background-repeat: repeat;
   background-size: 40%;
 }
@@ -270,9 +270,6 @@ img {
   width: 35px;
 }
 
-#botonAjustes.true {
-
-}
 
 #botonAjustesLight {
   position: absolute;
@@ -298,10 +295,6 @@ img {
   width: 35px;
 }
 
-#botonEquals.true {
-
-}
-
 #equalsLight {
   position: absolute;
   display: none;
@@ -318,10 +311,6 @@ img {
 
 #botonCross {
   width: 35px;
-}
-
-#botonCross.true {
-
 }
 
 #crossLight {
