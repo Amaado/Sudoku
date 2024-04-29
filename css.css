@@ -106,13 +106,38 @@ h1{
 .hover-column {
   background-color: #c7ba7165;
   border-bottom: solid #AC9A63 2px;
-  /*border-right: solid rgb(44, 16, 4) 2px;*/
   
 }
 
 .hover-border-replace {
   border-right: solid rgb(29, 28, 28) 4px;
 }
+
+.hover-row-default {
+  background-color: #c7ba7100;
+  border-right: solid rgb(44, 16, 4) 2px;
+  
+}
+
+.hover-column-default {
+  background-color: #c7ba7100;
+  border-bottom: solid rgb(44, 16, 4) 2px;
+  
+}
+
+.hover-row-default-color {
+  background-color: var(--cellColor);
+  border-right: solid rgb(44, 16, 4) 2px;
+  
+}
+
+.hover-column-default-color {
+  background-color: var(--cellColor);
+  border-bottom: solid rgb(44, 16, 4) 2px;
+  
+}
+
+
 
 /* Botones*/
 

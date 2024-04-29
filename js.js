@@ -86,6 +86,7 @@ function botonInactivoAjustes() {
   botonAjustesShadow.style.opacity = 1;
 }
 
+
 estado2=false;
 
 document.getElementById("botonCross").onclick = function botonCross() {
@@ -100,7 +101,224 @@ document.getElementById("botonCross").onclick = function botonCross() {
 };
 
 function botonActivoCross() {
-  // Definir la función hovers dentro de botonActivoCross
+  function botonActivoCross_hoverActivo() {
+    var cells = document.querySelectorAll("td");
+
+    function handleClick() {
+      cells.forEach(function (cell) {
+        cell.classList.remove("hover-row");
+        cell.classList.remove("hover-column");
+      });
+
+      var cellId = this.id;
+      var [row, column] = cellId.split(".");
+
+      cells.forEach(function (target) {
+        if (target.id.startsWith(row + ".")) {
+          target.classList.add("hover-row");
+        }
+        if (
+          target.id.endsWith("." + 3) ||
+          target.id.endsWith("." + 6) ||
+          target.id.endsWith("." + 9)
+        ) {
+          target.classList.add("hover-border-replace");
+        }
+      });
+
+      cells.forEach(function (target) {
+        if (target.id.endsWith("." + column)) {
+          target.classList.add("hover-column");
+        }
+      });
+    }
+
+    cells.forEach(function (cell) {
+      cell.addEventListener("click", handleClick);
+    });
+
+    document.addEventListener("click", function (event) {
+      if (!event.target.closest("td")) {
+        cells.forEach(function (cell) {
+          cell.classList.remove("hover-row");
+          cell.classList.remove("hover-column");
+        });
+      }
+    });
+  }
+  botonActivoCross_hoverActivo();
+
+  crossLight.style.display = "block";
+  crossLight.style.opacity = 1;
+  crossShadow.style.opacity = 0;
+  botonCross.style.borderColor = "#BDAA7B";
+}
+
+function botonInactivoCross() {
+  function botonActivoCross_hoverNoActivo() {
+    var cells = document.querySelectorAll("td");
+
+    function handleClick() {
+      cells.forEach(function (cell) {
+        if(target.id.endsWith(1 + "." + 3) ||
+        target.id.endsWith(1 + "." + 6) ||
+        target.id.endsWith(1 + "." + 9) ||
+        target.id.endsWith(2 + "." + 3) ||
+        target.id.endsWith(2 + "." + 6) ||
+        target.id.endsWith(2 + "." + 9) ||
+        target.id.endsWith(3 + "." + 3) ||
+        target.id.endsWith(3 + "." + 6) ||
+        target.id.endsWith(3 + "." + 9) ||
+        target.id.endsWith(7 + "." + 3) ||
+        target.id.endsWith(7 + "." + 6) ||
+        target.id.endsWith(7 + "." + 9) ||
+        target.id.endsWith(8 + "." + 3) ||
+        target.id.endsWith(8 + "." + 6) ||
+        target.id.endsWith(8 + "." + 9) ||
+        target.id.endsWith(9 + "." + 3) ||
+        target.id.endsWith(9 + "." + 6) ||
+        target.id.endsWith(9 + "." + 9)){
+          cell.classList.remove("hover-row-default-color");
+        cell.classList.remove("hover-column-default-color");
+
+        }else{ 
+        cell.classList.remove("hover-row-default");
+        cell.classList.remove("hover-column-default");
+        }
+
+      });
+
+      var cellId = this.id;
+      var [row, column] = cellId.split(".");
+
+      cells.forEach(function (target) {
+        if (target.id.startsWith(row + ".")) {
+          if(
+            target.id.endsWith(1 + "." + 3) ||
+            target.id.endsWith(1 + "." + 6) ||
+            target.id.endsWith(1 + "." + 9) ||
+            target.id.endsWith(2 + "." + 3) ||
+            target.id.endsWith(2 + "." + 6) ||
+            target.id.endsWith(2 + "." + 9) ||
+            target.id.endsWith(3 + "." + 3) ||
+            target.id.endsWith(3 + "." + 6) ||
+            target.id.endsWith(3 + "." + 9) ||
+            target.id.endsWith(7 + "." + 3) ||
+            target.id.endsWith(7 + "." + 6) ||
+            target.id.endsWith(7 + "." + 9) ||
+            target.id.endsWith(8 + "." + 3) ||
+            target.id.endsWith(8 + "." + 6) ||
+            target.id.endsWith(8 + "." + 9) ||
+            target.id.endsWith(9 + "." + 3) ||
+            target.id.endsWith(9 + "." + 6) ||
+            target.id.endsWith(9 + "." + 9)){
+            target.classList.add("hover-row-default-color");
+          }else{
+            target.classList.add("hover-row-default");
+          }
+          
+        }
+        if (
+          target.id.endsWith("." + 3) ||
+          target.id.endsWith("." + 6) ||
+          target.id.endsWith("." + 9)
+        ) {
+          target.classList.add("hover-border-replace");
+        }
+      });
+
+      cells.forEach(function (target) {
+        if (target.id.endsWith("." + column)) {
+
+          if(target.id.endsWith(1 + "." + 3) ||
+          target.id.endsWith(1 + "." + 6) ||
+          target.id.endsWith(1 + "." + 9) ||
+          target.id.endsWith(2 + "." + 3) ||
+          target.id.endsWith(2 + "." + 6) ||
+          target.id.endsWith(2 + "." + 9) ||
+          target.id.endsWith(3 + "." + 3) ||
+          target.id.endsWith(3 + "." + 6) ||
+          target.id.endsWith(3 + "." + 9) ||
+          target.id.endsWith(7 + "." + 3) ||
+          target.id.endsWith(7 + "." + 6) ||
+          target.id.endsWith(7 + "." + 9) ||
+          target.id.endsWith(8 + "." + 3) ||
+          target.id.endsWith(8 + "." + 6) ||
+          target.id.endsWith(8 + "." + 9) ||
+          target.id.endsWith(9 + "." + 3) ||
+          target.id.endsWith(9 + "." + 6) ||
+          target.id.endsWith(9 + "." + 9)){
+            target.classList.add("hover-column-default-color");
+          }
+          target.classList.add("hover-column-default");
+        }
+      });
+    }
+
+    cells.forEach(function (cell) {
+      cell.addEventListener("click", handleClick);
+    });
+
+    document.addEventListener("click", function (event) {
+      if (!event.target.closest("td")) {
+        cells.forEach(function (cell) {
+
+          if(target.id.endsWith(1 + "." + 3) ||
+          target.id.endsWith(1 + "." + 6) ||
+          target.id.endsWith(1 + "." + 9) ||
+          target.id.endsWith(2 + "." + 3) ||
+          target.id.endsWith(2 + "." + 6) ||
+          target.id.endsWith(2 + "." + 9) ||
+          target.id.endsWith(3 + "." + 3) ||
+          target.id.endsWith(3 + "." + 6) ||
+          target.id.endsWith(3 + "." + 9) ||
+          target.id.endsWith(7 + "." + 3) ||
+          target.id.endsWith(7 + "." + 6) ||
+          target.id.endsWith(7 + "." + 9) ||
+          target.id.endsWith(8 + "." + 3) ||
+          target.id.endsWith(8 + "." + 6) ||
+          target.id.endsWith(8 + "." + 9) ||
+          target.id.endsWith(9 + "." + 3) ||
+          target.id.endsWith(9 + "." + 6) ||
+          target.id.endsWith(9 + "." + 9)){
+            cell.classList.remove("hover-row-default-color");
+            cell.classList.remove("hover-column-default-color");
+          }else{ 
+          cell.classList.remove("hover-row-default");
+          cell.classList.remove("hover-column-default");
+          }
+        });
+      }
+    });
+  }
+  botonActivoCross_hoverNoActivo();
+
+
+
+  crossShadow.style.display = "block";
+  crossLight.style.opacity = 0;
+  crossShadow.style.opacity = 1;
+  botonCross.style.borderColor = "black";
+}
+
+
+
+
+/*
+estado2=false;
+
+document.getElementById("botonCross").onclick = function botonCross() {
+  var boton = document.getElementById("botonCross");
+  estado2 = !estado2;
+
+  if (estado2) {
+    botonActivoCross();
+  } else {
+    botonInactivoCross();
+  }
+};
+
+function botonActivoCross() {
   function hovers() {
     var cells = document.querySelectorAll("td");
 
@@ -160,6 +378,9 @@ function botonInactivoCross() {
   crossShadow.style.opacity = 1;
   botonCross.style.borderColor = "black";
 }
+*/
+
+
 
 
 /*
@@ -239,8 +460,8 @@ function botonActivoEquals() {
 
 function botonInactivoEquals() {
   equalsShadow.style.display = "block";
-  equalsLight.style.opacity = 0; // Hacer invisible el botón activo
-  equalsShadow.style.opacity = 1; // Hacer visible el botón inactivo
+  equalsLight.style.opacity = 0;
+  equalsShadow.style.opacity = 1;
   botonEquals.style.borderColor = "black";
 }
 
