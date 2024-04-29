@@ -277,10 +277,60 @@ img {
 #botonAjustesLight {
   position: absolute;
   display: none;
-  transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
   
 }
 
 #botonAjustesShadow{
-  transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+
+
+
+
+
+
+
+
+
+#botonEquals {
+  width: 35px;
+}
+
+#botonEquals.true {
+
+}
+
+#equalsLight {
+  position: absolute;
+  display: none;
+  transition: opacity 0.5s ease-in-out;
+  
+}
+
+#equalsShadow{
+  transition: opacity 0.5s ease-in-out;
+}
+
+
+
+
+#botonCross {
+  width: 35px;
+}
+
+#botonCross.true {
+
+}
+
+#crossLight {
+  position: absolute;
+  display: none;
+  transition: opacity 0.5s ease-in-out;
+  
+}
+
+#crossShadow{
+  transition: opacity 0.5s ease-in-out;
 }

@@ -27,15 +27,6 @@ for (let i = 1; i <= 9; i++) {
   }
 }
 
-
-
-
-
-
-
-
-
-
 /*
 function restaurarHover();
 
@@ -56,7 +47,127 @@ function ForbidenInput(input) {
   }
 }
 */
-document.addEventListener("DOMContentLoaded", function hovers() {
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const iconoAjustes = document.getElementById("botonAjustes");
+  const menu = document.getElementById("menu");
+
+  iconoAjustes.addEventListener("click", function () {
+    menu.classList.toggle("active");
+  });
+});
+
+var estado1 = false; 
+
+document.getElementById("botonAjustes").onclick = function botonAjustes() {
+  var boton = document.getElementById("botonAjustes");
+  estado1 = !estado1; 
+
+  
+  if (estado1) {
+    botonActivoAjustes();
+  } else {
+    botonInactivoAjustes();
+  }
+};
+
+function botonActivoAjustes() {
+  botonAjustesLight.style.transform = "translate(0%, 0%) rotate(420deg)";
+  botonAjustesShadow.style.transform = "translate(0%, 0%) rotate(420deg)";
+  botonAjustesLight.style.display = "block";
+  botonAjustesLight.style.opacity = 1; 
+  botonAjustesShadow.style.opacity = 0;
+}
+
+function botonInactivoAjustes() {
+  botonAjustesLight.style.transform = "translate(0%, 0%) rotate(0deg)";
+  botonAjustesShadow.style.transform = "translate(0%, 0%) rotate(0deg)";
+  botonAjustesShadow.style.display = "block";
+  botonAjustesLight.style.opacity = 0;
+  botonAjustesShadow.style.opacity = 1;
+}
+
+estado2=false;
+
+document.getElementById("botonCross").onclick = function botonCross() {
+  var boton = document.getElementById("botonCross");
+  estado2 = !estado2;
+
+  if (estado2) {
+    botonActivoCross();
+  } else {
+    botonInactivoCross();
+  }
+};
+
+function botonActivoCross() {
+  // Definir la función hovers dentro de botonActivoCross
+  function hovers() {
+    var cells = document.querySelectorAll("td");
+
+    function handleClick() {
+      cells.forEach(function (cell) {
+        cell.classList.remove("hover-row");
+        cell.classList.remove("hover-column");
+      });
+
+      var cellId = this.id;
+      var [row, column] = cellId.split(".");
+
+      cells.forEach(function (target) {
+        if (target.id.startsWith(row + ".")) {
+          target.classList.add("hover-row");
+        }
+        if (
+          target.id.endsWith("." + 3) ||
+          target.id.endsWith("." + 6) ||
+          target.id.endsWith("." + 9)
+        ) {
+          target.classList.add("hover-border-replace");
+        }
+      });
+
+      cells.forEach(function (target) {
+        if (target.id.endsWith("." + column)) {
+          target.classList.add("hover-column");
+        }
+      });
+    }
+
+    cells.forEach(function (cell) {
+      cell.addEventListener("click", handleClick);
+    });
+
+    document.addEventListener("click", function (event) {
+      if (!event.target.closest("td")) {
+        cells.forEach(function (cell) {
+          cell.classList.remove("hover-row");
+          cell.classList.remove("hover-column");
+        });
+      }
+    });
+  }
+  hovers();
+
+  crossLight.style.display = "block";
+  crossLight.style.opacity = 1;
+  crossShadow.style.opacity = 0;
+  botonCross.style.borderColor = "#BDAA7B";
+}
+
+function botonInactivoCross() {
+  crossShadow.style.display = "block";
+  crossLight.style.opacity = 0;
+  crossShadow.style.opacity = 1;
+  botonCross.style.borderColor = "black";
+}
+
+
+/*
+function hovers() {
   var cells = document.querySelectorAll("td");
 
   function handleClick() {
@@ -100,73 +211,46 @@ document.addEventListener("DOMContentLoaded", function hovers() {
       });
     }
   });
-});
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-  const iconoAjustes = document.getElementById("botonAjustes");
-  const menu = document.getElementById("menu");
-
-  iconoAjustes.addEventListener("click", function () {
-    menu.classList.toggle("active");
-    
-  });
-});
-
-
-
-
-
-
-
-var estado = false; // Estado inicial: falso
-
-document.getElementById("botonAjustes").onclick = function toggleEstado() {
-    var boton = document.getElementById("botonAjustes");
-    estado = !estado; // Cambiar el estado (de verdadero a falso o de falso a verdadero)
-    
-    // Llamar a la función correspondiente según el estado
-    if (estado) {
-        botonActivo();
-    } else {
-        botonInactivo();
-    }
 }
 
-function botonActivo() {
-  
-  botonAjustesLight.style.transform = "translate(0%, 0%) rotate(420deg)";
-  botonAjustesShadow.style.transform = "translate(0%, 0%) rotate(420deg)";
-  botonAjustesLight.style.display = "block";
-  botonAjustesLight.style.opacity = 1; // Hacer visible el botón activo
-  botonAjustesShadow.style.opacity = 0; // Hacer invisible el botón inactivo
+hovers();
+
+*/
+
+
+
+
+estado3=false;
+
+document.getElementById("botonEquals").onclick = function botonEquals() {
+  var boton = document.getElementById("botonEquals");
+  estado3 = !estado3;
 
   
-}
-
-function botonInactivo() {
-  botonAjustesLight.style.transform = "translate(0%, 0%) rotate(0deg)"; // Restaurar la rotación a cero grados
-  botonAjustesShadow.style.transform = "translate(0%, 0%) rotate(0deg)";
-  botonAjustesShadow.style.display = "block";
-  botonAjustesLight.style.opacity = 0; // Hacer invisible el botón activo
-    botonAjustesShadow.style.opacity = 1; // Hacer visible el botón inactivo
-
-    
+  if (estado3) {
+    botonActivoEquals();
+  } else {
+    botonInactivoEquals();
   }
+};
 
+function botonActivoEquals() {
+  equalsLight.style.display = "block";
+  equalsLight.style.opacity = 1;
+  equalsShadow.style.opacity = 0;
+  botonEquals.style.borderColor = "#BDAA7B";
+}
 
+function botonInactivoEquals() {
+  equalsShadow.style.display = "block";
+  equalsLight.style.opacity = 0; // Hacer invisible el botón activo
+  equalsShadow.style.opacity = 1; // Hacer visible el botón inactivo
+  botonEquals.style.borderColor = "black";
+}
 
-
-
-
-
-
-
-
-document.getElementById("botonLimpiar").onclick = function limpiar() {
-  let boton= document.getElementById("botonLimpiar")
-  let clean = document.getElementById("clean");
+document.getElementById("botonLimpiar").onclick = function botonLimpiar() {
+  let boton = document.getElementById("botonLimpiar");
+  let clean = document.getElementById("cleanShadow");
   let cleanGif = document.getElementById("cleanGif");
 
   cleanGif.style.display = "block";
@@ -174,21 +258,17 @@ document.getElementById("botonLimpiar").onclick = function limpiar() {
   clean.style.opacity = "100";
   cleanGif.style.opacity = "0";
   cleanGif.style.transition = "opacity 1s ease-in";
-  
 
   setTimeout(function () {
     cleanGif.style.opacity = "50";
     clean.style.opacity = "50";
-    
+    boton.style.borderColor = "#BDAA7B";
   }, 250);
 
   setTimeout(function () {
     clean.style.opacity = "0";
     clean.style.display = "none";
     cleanGif.style.opacity = "100";
-    boton.style.borderColor = "#BDAA7B";
-    
-    
   }, 500);
 
   setTimeout(function () {
@@ -196,36 +276,26 @@ document.getElementById("botonLimpiar").onclick = function limpiar() {
       for (let j = 1; j <= 9; j++) {
         let input = document.getElementById("input" + i + "." + j);
         let celda = document.getElementById(i + "." + j);
-        
+
         input.style.background = "none";
-        
       }
     }
-    
   }, 1000);
 
   setTimeout(function () {
     clean.style.opacity = "0";
     clean.style.display = "block";
     cleanGif.style.opacity = "100";
-    
-    
   }, 2300);
 
   setTimeout(function () {
     boton.style.borderColor = "rgb(29, 28, 28)";
-    
-    
   }, 2400);
-  
 
   setTimeout(function () {
     clean.style.opacity = "100";
     cleanGif.style.opacity = "0";
     cleanGif.style.display = "none";
     cleanGif.src = "img/clean.gif";
-    
-    
   }, 2500);
-
 };
