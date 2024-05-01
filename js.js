@@ -155,11 +155,110 @@ function botonActivoCross() {
 }
 
 function botonInactivoCross() {
+  function hoversErrase() {
+    var cells = document.querySelectorAll("td");
+
+    function handleClick() {
+      cells.forEach(function (cell) {
+        cell.classList.remove("hover-row-default");
+        cell.classList.remove("hover-column-default");
+        for (let i = 1; i <= 9; i++) {
+        for (let j = 1; j <= 9; j++) {
+          
+              let celda = document.getElementById(i + "." + j);
+      
+              if (i == 1 || i == 2 || i == 3 || i == 7 || i == 8 || i == 9) {
+                if(j == 1 || j == 2 || j == 3 || j == 7 || j == 8 || j == 9){
+                  celda.style.backgroundColor = "red"
+                }
+              }
+    
+              if(i == 4 || i == 5 || i == 6){
+                if(j == 4 || j == 5 || j == 6){
+                  celda.style.backgroundColor = "red"
+                }
+              }
+    
+              
+            
+        }
+      }
+      });
+
+      var cellId = this.id;
+      var [row, column] = cellId.split(".");
+
+      cells.forEach(function (target) {
+        if (target.id.startsWith(row + ".")) {
+          target.classList.add("hover-row-default");
+        }
+        if (
+          target.id.endsWith("." + 3) ||
+          target.id.endsWith("." + 6) ||
+          target.id.endsWith("." + 9)
+        ) {
+          target.classList.add("hover-border-replace-default");
+        }
+      });
+
+      cells.forEach(function (target) {
+        if (target.id.endsWith("." + column)) {
+          target.classList.add("hover-column-default");
+        }
+      });
+    }
+
+    cells.forEach(function (cell) {
+      cell.addEventListener("click", handleClick);
+      
+    });
+
+    
+
+    document.addEventListener("click", function (event) {
+      if (!event.target.closest("td")) {
+        cells.forEach(function (cell) {
+          cell.classList.remove("hover-row-default");
+          cell.classList.remove("hover-column-default");
+        });
+      }
+    });
+  }
+  hoversErrase();
+
+/*
+  for (let i = 1; i <= 9; i++) {
+    for (let j = 1; j <= 9; j++) {
+      document.getElementById("input" + i + "." + j).onfocus =
+        function comprobar() {
+          let celda = document.getElementById(i + "." + j);
+  
+          if (i == 1 || i == 2 || i == 3 || i == 7 || i == 8 || i == 9) {
+            if(j == 1 || j == 2 || j == 3 || j == 7 || j == 8 || j == 9){
+              celda.style.backgroundColor = "red"
+            }
+          }
+
+          if(i == 4 || i == 5 || i == 6){
+            if(j == 4 || j == 5 || j == 6){
+              celda.style.backgroundColor = "red"
+            }
+          }
+
+          
+        };
+    }
+  }*/
+
+
+
   crossShadow.style.display = "block";
   crossLight.style.opacity = 0;
   crossShadow.style.opacity = 1;
   botonCross.style.borderColor = "black";
 }
+
+
 
 
 /*
@@ -218,18 +317,6 @@ hovers();
 
 estado3=false;
 
-document.getElementById("botonEquals").onclick = function botonEquals() {
-  var boton = document.getElementById("botonEquals");
-  estado3 = !estado3;
-
-  
-  if (estado3) {
-    botonActivoEquals();
-  } else {
-    botonInactivoEquals();
-  }
-};
-
 function botonActivoEquals() {
   equalsLight.style.display = "block";
   equalsLight.style.opacity = 1;
@@ -239,10 +326,27 @@ function botonActivoEquals() {
 
 function botonInactivoEquals() {
   equalsShadow.style.display = "block";
-  equalsLight.style.opacity = 0; // Hacer invisible el botón activo
-  equalsShadow.style.opacity = 1; // Hacer visible el botón inactivo
+  equalsLight.style.opacity = 0;
+  equalsShadow.style.opacity = 1;
   botonEquals.style.borderColor = "black";
 }
+
+document.getElementById("botonEquals").onclick = function() {
+  var boton = document.getElementById("botonEquals");
+  estado3 = !estado3;
+
+  if (estado3) {
+    botonActivoEquals();
+  } else {
+    botonInactivoEquals();
+  }
+};
+
+
+
+
+
+
 
 document.getElementById("botonLimpiar").onclick = function botonLimpiar() {
   let boton = document.getElementById("botonLimpiar");

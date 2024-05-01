@@ -114,6 +114,24 @@ h1{
   border-right: solid rgb(29, 28, 28) 4px;
 }
 
+
+.hover-row-default {
+  background-color: #c7ba7100;
+  border: solid rgb(44, 16, 4) 2px;
+
+  
+}
+
+.hover-column-default {
+  background-color: #c7ba7100;
+  border: solid rgb(44, 16, 4) 2px;
+
+}
+
+.hover-border-replace-default {
+  border-right: solid rgb(29, 28, 28) 4px;
+}
+
 /* Botones*/
 
 .boton {
@@ -322,4 +340,12 @@ img {
 
 #crossShadow{
   transition: opacity 0.5s ease-in-out;
+}
+
+
+
+
+
+.numero-igual{
+  background-color: #c7ba71bc;
 }
