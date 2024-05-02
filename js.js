@@ -24,10 +24,10 @@ for (let i = 1; i <= 9; i++) {
 
 
 
-var sudokuInputs = document.getElementsByClassName('inputCasilla');
+var sudokuInputs = document.getElementsByClassName('botonComprobar');
 
 for (var i = 0; i < sudokuInputs.length; i++) {
-    sudokuInputs[i].addEventListener('input', function() {
+    sudokuInputs[i].addEventListener('click', function() {
         var sudokuValido = checkSudokuValidity();
         var cajaTexto = document.getElementById("cajaTexto");
         if (sudokuValido) {
