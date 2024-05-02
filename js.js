@@ -22,6 +22,59 @@ for (let i = 1; i <= 9; i++) {
   }
 }
 
+
+
+var sudokuInputs = document.getElementsByClassName('inputCasilla');
+
+for (var i = 0; i < sudokuInputs.length; i++) {
+    sudokuInputs[i].addEventListener('input', function() {
+        var sudokuValido = checkSudokuValidity();
+        var cajaTexto = document.getElementById("cajaTexto");
+        if (sudokuValido) {
+            console.log("El Sudoku es válido.");
+            cajaTexto.textContent = "VAlido";
+        } else {
+            console.log("El Sudoku no es válido.");
+            cajaTexto.textContent = "Error";
+        }
+    });
+}
+
+
+
+function checkSudokuValidity() {
+  var sudokuGrid = document.getElementById("Pattern");
+
+  for (var i = 1; i <= 9; i++) {
+      var row = [];
+      for (var j = 1; j <= 9; j++) {
+          var cell = sudokuGrid.rows[i].cells[j];
+          var value = cell.getElementsByTagName("input")[0].value.trim();
+          if (value !== "" && row.indexOf(value) !== -1) {
+              return false;
+          }
+          row.push(value);
+      }
+  }
+
+  for (var j = 1; j <= 9; j++) {
+      var column = [];
+      for (var i = 1; i <= 9; i++) {
+          var cell = sudokuGrid.rows[i].cells[j];
+          var value = cell.getElementsByTagName("input")[0].value.trim();
+          if (value !== "" && column.indexOf(value) !== -1) {
+              return false;
+          }
+          column.push(value);
+      }
+  }
+
+  return true;
+}
+
+
+
+
 /*
 function restaurarHover();
 
@@ -33,7 +86,7 @@ function restaurarHover() {
 */
 
 
-/*
+
 function ForbidenInput(input) {
   var valor = input.value;
 
@@ -42,7 +95,7 @@ function ForbidenInput(input) {
       
   }
 }
-*/
+
 
 
 
