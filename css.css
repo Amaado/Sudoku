@@ -389,3 +389,11 @@ img {
   -ms-user-select: none;
   user-select: none;
 }
+
+.checkError{
+  box-shadow: inset 0px 0px 10px 1px red;
+}
+
+.checkEmpty{
+  box-shadow: inset 0px 0px 10px 1px green;
+}

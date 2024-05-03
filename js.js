@@ -3,7 +3,10 @@ function checkEmptyCells() {
   
   inputCells.forEach(cell => {
       if (cell.value.trim() === '') {
-          cell.style.backgroundColor = 'lightgreen';
+          //cell.style.backgroundColor = 'lightgreen';
+          cell.classList.remove("checkError");
+          cell.classList.remove("checkEmpty");
+          cell.classList.add("checkEmpty");
       }
   });
 }
@@ -37,7 +40,10 @@ function checkRowDuplicates() {
       cajaErrores.appendChild(errorDiv);
       
       errorCells.forEach(cellId => {
-          document.getElementById(cellId).style.backgroundColor = 'red';
+          //document.getElementById(cellId).style.backgroundColor = 'red';
+          document.getElementById(cellId).classList.remove("checkError");
+          document.getElementById(cellId).classList.remove("checkEmpty");
+          document.getElementById(cellId).classList.add("checkError");
       });
   }
 }
@@ -70,7 +76,11 @@ function checkColumnDuplicates() {
       cajaErrores.appendChild(errorDiv);
       
       errorCells.forEach(cellId => {
-          document.getElementById(cellId).style.backgroundColor = 'red';
+          //document.getElementById(cellId).style.backgroundColor = 'red';
+          document.getElementById(cellId).classList.remove("checkError");
+          document.getElementById(cellId).classList.remove("checkEmpty");
+          document.getElementById(cellId).classList.add("checkError");
+
       });
   }
 }
@@ -106,7 +116,11 @@ function checkGroupDuplicates() {
       cajaErrores.appendChild(errorDiv);
       
       errorCells.forEach(cellId => {
-          document.getElementById(cellId).style.backgroundColor = 'red';
+          //document.getElementById(cellId).style.backgroundColor = 'red';
+          document.getElementById(cellId).classList.remove("checkError");
+          document.getElementById(cellId).classList.remove("checkEmpty");
+          document.getElementById(cellId).classList.add("checkError");
+
       });
   }
 }
@@ -116,6 +130,10 @@ document.querySelector('.botonComprobar').addEventListener('click', function() {
   inputs.forEach(input => {
       input.style.backgroundColor = '';
   });
+
+  
+  
+
 
   let cajaErrores = document.querySelector('.cajaErrores');
   cajaErrores.innerHTML = '';
@@ -217,10 +235,6 @@ document.getElementById("botonCross").onclick = function botonCross() {
     botonInactivoCross();
   }
 };
-
-
-
-
 
 function botonActivoCross() {
   function hovers() {
@@ -397,14 +411,16 @@ document.getElementById("botonLimpiar").onclick = function botonLimpiar() {
   }, 500);
 
   setTimeout(function () {
-    for (let i = 1; i <= 9; i++) {
-      for (let j = 1; j <= 9; j++) {
-        let input = document.getElementById("input" + i + "." + j);
-        let celda = document.getElementById(i + "." + j);
+    let inputCells = document.querySelectorAll('.inputCasilla');
+  
+    inputCells.forEach(cell => {
+        if (cell.value.trim() === '') {
+            //cell.style.backgroundColor = 'lightgreen';
+            cell.classList.remove("checkError");
+            cell.classList.remove("checkEmpty");
+        }
+    });
 
-        input.style.background = "none";
-      }
-    }
   }, 1000);
 
   setTimeout(function () {
@@ -423,4 +439,9 @@ document.getElementById("botonLimpiar").onclick = function botonLimpiar() {
     cleanGif.style.display = "none";
     cleanGif.src = "img/clean.gif";
   }, 2500);
+
+
+
+  
+
 };
