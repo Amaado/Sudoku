@@ -1,76 +1,136 @@
-for (let i = 1; i <= 9; i++) {
+function checkEmptyCells() {
+  let inputCells = document.querySelectorAll('.inputCasilla');
+  
+  inputCells.forEach(cell => {
+      if (cell.value.trim() === '') {
+          cell.style.backgroundColor = 'lightgreen';
+      }
+  });
+}
+
+
+
+function checkRowDuplicates() {
+  let rowIds = {};
+  let errorCells = [];
+  let cajaErrores = document.querySelector('.cajaErrores');
+  
+  for (let i = 1; i <= 9; i++) {
+      for (let j = 1; j <= 9; j++) {
+          let inputId = 'input' + i + '.' + j;
+          let cellValue = document.getElementById(inputId).value;
+          
+          if (cellValue !== '') {
+              if (rowIds[cellValue]) {
+                  errorCells.push(inputId);
+              } else {
+                  rowIds[cellValue] = true;
+              }
+          }
+      }
+      rowIds = {};
+  }
+  
+  if (errorCells.length > 0) {
+      let errorDiv = document.createElement('div');
+      errorDiv.textContent = "Número repetido en la fila: " + errorCells.map(cellId => cellId.slice(5)).join(", ");
+      cajaErrores.appendChild(errorDiv);
+      
+      errorCells.forEach(cellId => {
+          document.getElementById(cellId).style.backgroundColor = 'red';
+      });
+  }
+}
+
+function checkColumnDuplicates() {
+  let columnIds = {};
+  let errorCells = [];
+  let cajaErrores = document.querySelector('.cajaErrores');
+  
   for (let j = 1; j <= 9; j++) {
-    document.getElementById("input" + i + "." + j).onblur =
-      function comprobar() {
-        let input = document.getElementById("input" + i + "." + j);
-        let celda = document.getElementById(i + "." + j);
+      for (let i = 1; i <= 9; i++) {
+          let inputId = 'input' + i + '.' + j;
+          let cellValue = document.getElementById(inputId).value;
+          
+          if (cellValue !== '') {
+              if (columnIds[cellValue]) {
+                  errorCells.push(inputId);
+              } else {
+                  columnIds[cellValue] = true;
+              }
+          }
+      }
+      columnIds = {};
+  }
+  
+  if (errorCells.length > 0) {
+      let errorDiv = document.createElement('div');
 
-        if (isNaN(input.value)) {
-          input.style.background = "url('img/redSpot.png') center no-repeat";
-          input.style.backgroundSize = "cover";
-
-
-        } else if (0 < input.value) {
-          input.style.background = "";
-
-        } else {
-          input.style.background = "url('img/greenSpot.png') center no-repeat";
-          input.style.backgroundSize = "cover";
-
-        }
-      };
+      errorDiv.textContent = "Número repetido en la columna: " + errorCells.map(cellId => cellId.slice(5)).join(", ");
+      cajaErrores.appendChild(errorDiv);
+      
+      errorCells.forEach(cellId => {
+          document.getElementById(cellId).style.backgroundColor = 'red';
+      });
   }
 }
 
-
-
-var sudokuInputs = document.getElementsByClassName('botonComprobar');
-
-for (var i = 0; i < sudokuInputs.length; i++) {
-    sudokuInputs[i].addEventListener('click', function() {
-        var sudokuValido = checkSudokuValidity();
-        var cajaTexto = document.getElementById("cajaTexto");
-        if (sudokuValido) {
-            console.log("El Sudoku es válido.");
-            cajaTexto.textContent = "VAlido";
-        } else {
-            console.log("El Sudoku no es válido.");
-            cajaTexto.textContent = "Error";
-        }
-    });
-}
-
-
-
-function checkSudokuValidity() {
-  var sudokuGrid = document.getElementById("Pattern");
-
-  for (var i = 1; i <= 9; i++) {
-      var row = [];
-      for (var j = 1; j <= 9; j++) {
-          var cell = sudokuGrid.rows[i].cells[j];
-          var value = cell.getElementsByTagName("input")[0].value.trim();
-          if (value !== "" && row.indexOf(value) !== -1) {
-              return false;
+function checkGroupDuplicates() {
+  let groupIds = {};
+  let errorCells = [];
+  let cajaErrores = document.querySelector('.cajaErrores');
+  
+  for (let k = 0; k < 9; k += 3) {
+      for (let l = 0; l < 9; l += 3) {
+          for (let i = 1; i <= 3; i++) {
+              for (let j = 1; j <= 3; j++) {
+                  let inputId = 'input' + (i + k) + '.' + (j + l);
+                  let cellValue = document.getElementById(inputId).value;
+                  
+                  if (cellValue !== '') {
+                      if (groupIds[cellValue]) {
+                          errorCells.push(inputId);
+                      } else {
+                          groupIds[cellValue] = true;
+                      }
+                  }
+              }
           }
-          row.push(value);
+          groupIds = {};
       }
   }
-
-  for (var j = 1; j <= 9; j++) {
-      var column = [];
-      for (var i = 1; i <= 9; i++) {
-          var cell = sudokuGrid.rows[i].cells[j];
-          var value = cell.getElementsByTagName("input")[0].value.trim();
-          if (value !== "" && column.indexOf(value) !== -1) {
-              return false;
-          }
-          column.push(value);
-      }
+  
+  if (errorCells.length > 0) {
+      let errorDiv = document.createElement('div');
+      errorDiv.textContent = "Número repetido en el grupo: " + errorCells.map(cellId => cellId.slice(5)).join(", ");
+      cajaErrores.appendChild(errorDiv);
+      
+      errorCells.forEach(cellId => {
+          document.getElementById(cellId).style.backgroundColor = 'red';
+      });
   }
-
-  return true;
 }
+
+document.querySelector('.botonComprobar').addEventListener('click', function() {
+  let inputs = document.querySelectorAll('.inputCasilla');
+  inputs.forEach(input => {
+      input.style.backgroundColor = '';
+  });
+
+  let cajaErrores = document.querySelector('.cajaErrores');
+  cajaErrores.innerHTML = '';
+
+  checkRowDuplicates();
+  checkColumnDuplicates();
+  checkGroupDuplicates();
+  checkEmptyCells();
+});
+
+
+
+
+
+
 
 
 

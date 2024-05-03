@@ -139,64 +139,6 @@ h1{
 
 
 
-/* Botones*/
-
-.boton {
-  cursor: pointer;
-  margin: auto;
-  background-color: var(--cellColor);
-  border: solid 4px black;
-  align-content: center;
-  text-align: center;
-  font-size: 22;
-  display: inline-block;
-  vertical-align: middle;
-  -webkit-transform: perspective(1px) translateZ(0);
-  transform: perspective(1px) translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  position: relative;
-  -webkit-transition-property: color;
-  transition-property: color;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  justify-content:space-around;
-}
-.boton:before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #675b4d;
-  -webkit-transform: scaleY(0);
-  transform: scaleY(0);
-  -webkit-transform-origin: 50%;
-  transform-origin: 50%;
-  -webkit-transition-property: transform;
-  transition-property: transform;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  -webkit-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
-  border-radius: 5px;
-}
-.boton:hover,
-.boton:focus,
-.boton:active {
-  color: #c8bda1;
-}
-.boton:hover:before,
-.boton:focus:before,
-.boton:active:before {
-  -webkit-transform: scaleY(1);
-  transform: scaleY(1);
-}
-
-
-
-
 
 /* Ajustes --> Contenedor row junto sudoku */
 
@@ -351,27 +293,90 @@ img {
 
 
 .cajaErrores{
-  background-color: rgba(134, 134, 134, 0.692);
+  background-color: #b4a987cb;
+  border: double 7px rgba(29, 28, 28, 0.344);
   width: 600px;
   min-height: 200px;
   display: flex;
-  align-items: center;
-  justify-content: center;
   margin: auto;
-  margin-top: 20px;
+  margin-top: 50px;
   border-radius: 20px;
+  padding: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(255, 0, 0);
+  -webkit-text-stroke: 0.5px #453c33;
+
+
+
+}
+.cajaErrores div{
+  margin-top: 10px;
+  margin-left: 30px;
 
 }
 
-.botonComprobar{
-  background-color: rgba(134, 134, 134, 0.692);
-  width: 400px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: auto;
+.cajaErrores div:not(:first-child){
   margin-top: 30px;
-  border-radius: 20px;
+}
 
+
+
+
+.botonComprobar {
+  margin: auto;
+  top: 25px;
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  margin: auto;
+  background-color: #b4a987cb;
+  border: double 7px rgba(29, 28, 28, 0.344);
+  border-radius: 10px;
+  align-content: center;
+  text-align: center;
+  font-size: 22;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  -webkit-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  justify-content:space-around;
+}
+.botonComprobar:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #675b4d;
+  -webkit-transform: scaleY(0);
+  transform: scaleY(0);
+  -webkit-transform-origin: 50%;
+  transform-origin: 50%;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+  border-radius: 3px;
+}
+.botonComprobar:hover,
+.botonComprobar:focus,
+.botonComprobar:active {
+  color: #c8bda1;
+}
+.botonComprobar:hover:before,
+.botonComprobar:focus:before,
+.botonComprobar:active:before {
+  -webkit-transform: scaleY(1);
+  transform: scaleY(1);
 }
