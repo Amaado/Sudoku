@@ -89,6 +89,8 @@ h1{
   }
 }
 
+
+
 /* Patrón de fondo */
 #Pattern {
   background-image: url("img/pattern-louis-vuitton.png");
@@ -137,7 +139,12 @@ h1{
   
 }
 
-
+.hover-equal input {
+  background-color: #c7ba7165;
+  box-shadow: 0px 0px 36px -2px #fff6c3da inset;
+-webkit-box-shadow: 0px 0px 36px -2px #fff6c3da inset;
+-moz-box-shadow: 0px 0px 36px -2px #fff6c3da inset;
+}
 
 
 /* Ajustes --> Contenedor row junto sudoku */
