@@ -76,11 +76,13 @@ input.inputCasilla:focus {
 section div {
   display: flex;
   flex-direction: column;
+  margin-top: -5px;
 }
 
 h1{
   gap: 30px;
   margin-left: 25px;
+  user-select: none;
 }
 
 @media only screen and (max-width: 768px) {
@@ -170,18 +172,20 @@ h1{
     width: 40px;
     height: 48%;
     /*background-color: purple;*/
-    top: 105px;
+    top: 115px;
     left: 330px;
+    cursor: default;
+    user-select: none;
     
 }
 
 .menu{
   display: none;
   position: absolute;
-  top: 100%;
-  right: 2px;
+  top: 110%;
+  right: 0px;
   flex-direction: column;
-  gap: 8px;
+  gap: 15px;
 }
 
 .menu.active {
@@ -196,9 +200,21 @@ h1{
 
 /* ICONOS IMAGENES */
 
-img {
+.img {
   width: 35px;
   height: 35px;
+  margin-top: 0.5px;
+  -webkit-user-drag: none;
+
+  
+
+}
+
+.img2 {
+  width: 62px;
+  height: 62px;
+  -webkit-user-drag: none;
+
   
 
 }
@@ -224,6 +240,32 @@ img {
     
 }
 
+.button2{
+  display: flex;
+  flex-direction: row;
+  padding: 2px;
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border: solid 2px rgb(29, 28, 28);
+  border-radius: 10px;
+  cursor: pointer;
+  margin-left: 5px;
+  justify-content: center;
+  align-items: center;
+  transition: border-color 0.5s;
+  background-color: #6a5c4d00;
+  transition: background-color 0.5s ease-in-out;
+
+}
+
+.button2:hover{
+  background-color: #6a5c4d80;
+
+
+  
+}
+
 #clean{
   z-index: 10;
 }
@@ -239,6 +281,39 @@ img {
   display: none;
   transition: opacity 1s ease-in-out;
 }
+
+
+#botonRestart{
+  margin-left: 400px;
+}
+
+#restartLight, #restartShadow {
+  position: absolute;
+  transition: opacity 1s ease; /* Transición suave de opacidad */
+}
+
+#restartLight {
+  display: none; /* Inicia no visible */
+}
+
+#restartShadow {
+  display: block; /* Inicia visible */
+}
+
+#checkearLight, #checkearShadow {
+  position: absolute;
+  transition: opacity 1s ease; /* Transición suave de opacidad */
+}
+
+#checkearLight {
+  display: none; /* Inicia no visible */
+}
+
+#checkearShadow {
+  display: block; /* Inicia visible */
+}
+
+
 
 #botonAjustes {
   width: 35px;
@@ -259,7 +334,18 @@ img {
 
 
 
+#colorAreaLight, #colorAreaShadow {
+  position: absolute;
+  transition: opacity 0.5s ease-in-out;
+}
 
+#colorAreaLight {
+  display: none;
+}
+
+#colorAreaShadow {
+  display: block;
+}
 
 
 
@@ -330,72 +416,17 @@ img {
 
 
 
-.botonComprobar {
+.botonesContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   margin: auto;
-  top: 25px;
-  width: 150px;
-  height: 50px;
-  cursor: pointer;
-  margin: auto;
-  background-color: #b4a987cb;
-  border: double 7px rgba(29, 28, 28, 0.344);
-  border-radius: 10px;
-  align-content: center;
-  text-align: center;
-  font-size: 22;
-  display: inline-block;
-  vertical-align: middle;
-  -webkit-transform: perspective(1px) translateZ(0);
-  transform: perspective(1px) translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  position: relative;
-  -webkit-transition-property: color;
-  transition-property: color;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  justify-content:space-around;
-}
-.botonComprobar:before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #675b4d;
-  -webkit-transform: scaleY(0);
-  transform: scaleY(0);
-  -webkit-transform-origin: 50%;
-  transform-origin: 50%;
-  -webkit-transition-property: transform;
-  transition-property: transform;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  -webkit-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
-  border-radius: 3px;
-}
-.botonComprobar:hover,
-.botonComprobar:focus,
-.botonComprobar:active {
-  color: #c8bda1;
-}
-.botonComprobar:hover:before,
-.botonComprobar:focus:before,
-.botonComprobar:active:before {
-  -webkit-transform: scaleY(1);
-  transform: scaleY(1);
-}
-
-.no-select {
-  -webkit-touch-callout: none; 
-  -webkit-user-select: none;
-  -khtml-user-select: none; 
-  -moz-user-select: none; 
-  -ms-user-select: none;
+  gap: 20px;
+  margin-top: 20px;
   user-select: none;
 }
+
 
 .checkError{
   box-shadow: inset 0px 0px 10px 1px red;
@@ -403,4 +434,8 @@ img {
 
 .checkEmpty{
   box-shadow: inset 0px 0px 10px 1px green;
+}
+
+.grupoSeleccionado {
+  background-color: #c7ba7165;
 }

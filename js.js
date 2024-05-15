@@ -237,19 +237,24 @@ function checkGroupDuplicates() {
   }
 }
 
-document.querySelector('.botonComprobar').addEventListener('click', function() {
-  let inputs = document.querySelectorAll('.inputCasilla');
-  inputs.forEach(input => {
-      input.style.backgroundColor = '';
-  });
+document.getElementById('botonCheckear').addEventListener('click', function() {
+  setTimeout(function () {
+      let inputs = document.querySelectorAll('.inputCasilla');
+      inputs.forEach(input => {
+          input.style.backgroundColor = '';
+      });
 
-  let cajaErrores = document.querySelector('.cajaErrores');
-  cajaErrores.innerHTML = '';
+      let cajaErrores = document.querySelector('.cajaErrores');
+      cajaErrores.innerHTML = '';
 
-  checkRowDuplicates();
-  checkColumnDuplicates();
-  checkGroupDuplicates();
-  checkEmptyCells();
+      checkRowDuplicates();
+      checkColumnDuplicates();
+      checkGroupDuplicates();
+      checkEmptyCells();
+
+  }, 500);
+
+  
 });
 
 function ForbidenInput(input) {
@@ -404,7 +409,6 @@ function botonActivoEquals() {
   var cells = document.querySelectorAll("td");
 
   function handleClick() {
-    // Eliminar las clases existentes de todas las celdas
     cells.forEach(function (cell) {
       cell.classList.remove("hover-equal");
     });
@@ -412,7 +416,6 @@ function botonActivoEquals() {
     var cellId = this.id;
     var inputValue = document.getElementById("input" + cellId).value;
 
-    // Añadir la clase hover-equal a todas las celdas con el mismo valor del input seleccionado
     cells.forEach(function (target) {
       var targetInputValue = document.getElementById("input" + target.id).value;
       if (targetInputValue === inputValue && inputValue !== '') {
@@ -421,17 +424,13 @@ function botonActivoEquals() {
     });
   }
 
-  // Agregar el evento de clic a cada celda
   cells.forEach(function (cell) {
     cell.addEventListener("click", handleClick);
-    // Guardar el manejador en la celda para removerlo después
     cell.equalsClickHandler = handleClick;
   });
 
-  // Evento para eliminar el resaltado al hacer clic fuera del Sudoku
   document.addEventListener("click", removeEqualsHighlight);
 
-  // Ajustes para el botón activado
   equalsLight.style.display = "block";
   equalsLight.style.opacity = 1;
   equalsShadow.style.opacity = 0;
@@ -441,20 +440,16 @@ function botonActivoEquals() {
 function botonInactivoEquals() {
   var cells = document.querySelectorAll("td");
 
-  // Remover las clases hover-equal de todas las celdas
   cells.forEach(function (cell) {
     cell.classList.remove("hover-equal");
-    // Remover el evento de clic de cada celda
     if (cell.equalsClickHandler) {
       cell.removeEventListener("click", cell.equalsClickHandler);
       delete cell.equalsClickHandler;
     }
   });
 
-  // Remover el evento de clic fuera del Sudoku
   document.removeEventListener("click", removeEqualsHighlight);
 
-  // Ajustes para el botón desactivado
   equalsShadow.style.display = "block";
   equalsLight.style.opacity = 0;
   equalsShadow.style.opacity = 1;
@@ -469,6 +464,139 @@ function removeEqualsHighlight(event) {
     });
   }
 }
+
+
+
+var estado4 = false;
+
+document.getElementById("botonColorArea").onclick = function botonColorArea() {
+  var boton = document.getElementById("botonColorArea");
+  estado4 = !estado4;
+
+  if (estado4) {
+    botonActivoColorArea();
+    boton.style.borderColor = "#BDAA7B"; // Borde activo
+  } else {
+    botonInactivoColorArea();
+    boton.style.borderColor = "black"; // Borde inactivo
+  }
+};
+
+function botonActivoColorArea() {
+  var cells = document.querySelectorAll("td");
+  var inputs = document.querySelectorAll("input");
+
+  // Añadir eventos solo si el botón está activo
+  cells.forEach(function(cell) {
+    cell.addEventListener("click", handleGroupHighlight);
+  });
+
+  inputs.forEach(function(input) {
+    input.addEventListener("blur", removeGroupHighlight);
+  });
+
+  colorAreaLight.style.display = "block";
+  colorAreaShadow.style.display = "block";
+
+  setTimeout(() => {
+    colorAreaLight.style.opacity = 1;
+    colorAreaShadow.style.opacity = 0;
+  }, 10);
+}
+
+function botonInactivoColorArea() {
+  var cells = document.querySelectorAll("td");
+
+  // Eliminar el manejador de eventos cuando el botón está inactivo para evitar marcar grupos
+  cells.forEach(function(cell) {
+    cell.removeEventListener("click", handleGroupHighlight);
+  });
+
+  removeGroupHighlight();
+  colorAreaLight.style.opacity = 0;
+  colorAreaShadow.style.opacity = 1;
+
+  setTimeout(() => {
+    colorAreaLight.style.display = "none";
+    colorAreaShadow.style.display = "block";
+  }, 500);
+}
+
+function handleGroupHighlight(event) {
+  if (!estado4) return; // No hacer nada si el botón no está activo
+
+  var cells = document.querySelectorAll("td");
+  removeGroupHighlight();
+
+  var clickedCellId = this.id;
+  var [row, col] = clickedCellId.split(".");
+  row = parseInt(row);
+  col = parseInt(col);
+
+  // Calcular el inicio del grupo basado en el ID de la celda
+  var startRow = row - ((row - 1) % 3);
+  var startCol = col - ((col - 1) % 3);
+
+  // Añadir la clase a todas las celdas del mismo grupo
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      var cellId = `${startRow + i}.${startCol + j}`;
+      var cell = document.getElementById(cellId);
+      if (cell) {
+        cell.classList.add("grupoSeleccionado");
+      }
+    }
+  }
+}
+
+function removeGroupHighlight() {
+  var cells = document.querySelectorAll("td");
+  cells.forEach(cell => cell.classList.remove("grupoSeleccionado"));
+}
+
+
+
+
+
+
+
+document.getElementById("botonCheckear").onclick = function botonLimpiar() {
+  let boton = document.getElementById("botonCheckear");
+  let checkearShadow = document.getElementById("checkearShadow");
+  let checkearLight = document.getElementById("checkearLight");
+
+  checkearShadow.style.display = "block";
+  checkearLight.style.display = "block";
+  checkearLight.style.zIndex = "20";
+
+  checkearLight.style.opacity = "0";
+  checkearShadow.style.opacity = "100";
+  boton.style.borderColor = "#1d1c1c";
+
+  setTimeout(function () {
+    checkearLight.style.opacity = "1";
+    boton.style.borderColor = "#BDAA7B";
+  }, 500);
+
+  setTimeout(function () {
+    checkearLight.style.opacity = "1";
+    boton.style.borderColor = "#BDAA7B";
+
+  }, 1750);
+
+  setTimeout(function () {
+    checkearLight.style.opacity = "0.5";
+
+  }, 2000);
+
+  setTimeout(function () {
+    boton.style.borderColor = "#1d1c1c";
+    checkearLight.style.opacity = "0";
+    checkearLight.style.display = "none";
+    
+  }, 2250);
+};
+
 
 document.getElementById("botonLimpiar").onclick = function botonLimpiar() {
   let boton = document.getElementById("botonLimpiar");
@@ -522,3 +650,44 @@ document.getElementById("botonLimpiar").onclick = function botonLimpiar() {
     cleanGif.src = "img/clean.gif";
   }, 2500);
 };
+
+document.getElementById("botonRestart").onclick = function botonLimpiar() {
+  let boton = document.getElementById("botonRestart");
+  let restartShadow = document.getElementById("restartShadow");
+  let restartLight = document.getElementById("restartLight");
+
+  restartShadow.style.display = "block";
+  restartLight.style.display = "block";
+  restartLight.style.zIndex = "20";
+
+  restartLight.style.opacity = "0";
+  restartShadow.style.opacity = "100";
+  boton.style.borderColor = "#1d1c1c";
+
+  setTimeout(function () {
+    restartLight.style.opacity = "1";
+    boton.style.borderColor = "#BDAA7B";
+  }, 500);
+
+  setTimeout(function () {
+    restartLight.style.opacity = "1";
+    boton.style.borderColor = "#BDAA7B";
+
+  }, 1750);
+
+  setTimeout(function () {
+    restartLight.style.opacity = "0.5";
+
+  }, 2000);
+
+  setTimeout(function () {
+    boton.style.borderColor = "#1d1c1c";
+    restartLight.style.opacity = "0";
+    restartLight.style.display = "none";
+    
+  }, 2250);
+};
+
+
+
+
