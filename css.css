@@ -62,7 +62,6 @@ input.inputCasilla:focus {
   height: 133.5%;
   margin-left: -10px;
   background-color: #c7ba71bc;
-  /*border: solid 0px black;*/
 }
 
 .limitador {
@@ -283,34 +282,35 @@ h1{
 }
 
 
-#botonRestart{
+#botonRestart {
   margin-left: 400px;
+  transition: border-color 0.5s ease-in-out;
 }
 
 #restartLight, #restartShadow {
   position: absolute;
-  transition: opacity 1s ease; /* Transición suave de opacidad */
+  transition: opacity 0.5s ease-in-out;
 }
 
 #restartLight {
-  display: none; /* Inicia no visible */
+  display: none;
 }
 
 #restartShadow {
-  display: block; /* Inicia visible */
+  display: block;
 }
 
 #checkearLight, #checkearShadow {
   position: absolute;
-  transition: opacity 1s ease; /* Transición suave de opacidad */
+  transition: opacity 1s ease;
 }
 
 #checkearLight {
-  display: none; /* Inicia no visible */
+  display: none;
 }
 
 #checkearShadow {
-  display: block; /* Inicia visible */
+  display: block;
 }
 
 
@@ -340,11 +340,15 @@ h1{
 }
 
 #colorAreaLight {
-  display: none;
+  background-image: url('img/colorArea_light.png');
+  background-size: cover;
+  background-position: center;
 }
 
 #colorAreaShadow {
-  display: block;
+  background-image: url('img/colorArea_shadow.png');
+  background-size: cover;
+  background-position: center;
 }
 
 
