@@ -124,29 +124,93 @@ function shuffle(array) {
 
 function checkEmptyCells() {
   let inputCells = document.querySelectorAll('.inputCasilla');
-  
+  let hasEmpty = false;
+
   inputCells.forEach(cell => {
       if (cell.value.trim() === '') {
-          cell.classList.remove("checkError");
-          cell.classList.remove("checkEmpty");
           cell.classList.add("checkEmpty");
+          hasEmpty = true;
+      } else {
+          cell.classList.remove("checkEmpty");
       }
   });
+
+  return hasEmpty;
+}
+
+function ensureErrorBox() {
+  let cajaErrores = document.querySelector('.cajaErrores');
+  if (!cajaErrores) {
+    // Crear la caja de errores si no existe
+    cajaErrores = document.createElement('div');
+    cajaErrores.className = 'cajaErrores';
+    document.getElementById("caption").appendChild(cajaErrores);
+
+    // Agregar el título al contenedor de errores
+    let tituloError = document.createElement('section');
+    tituloError.classList.add("tituloError");
+    tituloError.innerHTML = '¡ <span class="subrayado">ERROR</span> !';
+    cajaErrores.appendChild(tituloError);
+
+    // Agregar una imagen al contenedor de errores
+    let imagenError = document.createElement('img');
+    imagenError.classList.add("imagenError");
+    imagenError.src = 'img/error.png'; // Asegúrate de tener la ruta correcta a tu imagen aquí
+    tituloError.insertBefore(imagenError, tituloError.firstChild);
+
+    // Añadir manejador de eventos para la imagen
+    imagenError.addEventListener('click', function() {
+      cajaErrores.style.display = 'none'; // Ocultar el contenedor de errores
+    });
+  }
+
+  return cajaErrores;
+}
+
+
+function clearErrors() {
+  let cajaErrores = document.querySelector('.cajaErrores');
+  if (cajaErrores) {
+      cajaErrores.innerHTML = '';
+      cajaErrores.parentNode.removeChild(cajaErrores);
+  }
+}
+
+function addError(message) {
+  let cajaErrores = ensureErrorBox();
+  let errorDiv = document.createElement('div');
+  errorDiv.textContent = message;
+  cajaErrores.appendChild(errorDiv);
+}
+
+function checkForErrors() {
+  clearErrors(); // Ensure no previous errors are displayed
+  let hasErrors = false;
+
+  hasErrors = checkRowDuplicates() || hasErrors;
+  hasErrors = checkColumnDuplicates() || hasErrors;
+  hasErrors = checkGroupDuplicates() || hasErrors;
+  hasErrors = checkEmptyCells() || hasErrors;
+
+  if (!hasErrors) {
+      clearErrors(); // Clean up if no errors are present
+  }
 }
 
 function checkRowDuplicates() {
   let rowIds = {};
   let errorCells = [];
-  let cajaErrores = document.querySelector('.cajaErrores');
-  
+  let hasError = false;
+
   for (let i = 1; i <= 9; i++) {
       for (let j = 1; j <= 9; j++) {
           let inputId = 'input' + i + '.' + j;
-          let cellValue = document.getElementById(inputId).value;
-          
+          let cellValue = document.getElementById(inputId).value.trim();
+        
           if (cellValue !== '') {
               if (rowIds[cellValue]) {
                   errorCells.push(inputId);
+                  hasError = true;
               } else {
                   rowIds[cellValue] = true;
               }
@@ -154,53 +218,45 @@ function checkRowDuplicates() {
       }
       rowIds = {};
   }
-  
+
   if (errorCells.length > 0) {
-      let errorDiv = document.createElement('div');
-      errorDiv.textContent = "Número repetido en la fila: " + errorCells.map(cellId => cellId.slice(5)).join(", ");
-      cajaErrores.appendChild(errorDiv);
-      
-      errorCells.forEach(cellId => {
-          document.getElementById(cellId).classList.remove("checkError");
-          document.getElementById(cellId).classList.remove("checkEmpty");
-          document.getElementById(cellId).classList.add("checkError");
-      });
+      addError("Número repetido en la fila: " + errorCells.map(cellId => cellId.slice(5)).join(", "));
   }
+
+  return hasError;
 }
 
 function checkColumnDuplicates() {
   let columnIds = {};
   let errorCells = [];
-  let cajaErrores = document.querySelector('.cajaErrores');
-  
+  let hasError = false;
+
   for (let j = 1; j <= 9; j++) {
+      let columnValues = {}; // Reiniciar el seguimiento de valores para cada columna
+
       for (let i = 1; i <= 9; i++) {
           let inputId = 'input' + i + '.' + j;
-          let cellValue = document.getElementById(inputId).value;
+          let cellValue = document.getElementById(inputId).value.trim();
           
           if (cellValue !== '') {
-              if (columnIds[cellValue]) {
+              if (columnValues[cellValue]) {
                   errorCells.push(inputId);
+                  hasError = true;
+                  document.getElementById(inputId).classList.add("checkError"); // Marcar inmediatamente la celda con error
               } else {
-                  columnIds[cellValue] = true;
+                  columnValues[cellValue] = true;
               }
           }
       }
-      columnIds = {};
   }
-  
+
   if (errorCells.length > 0) {
       let errorDiv = document.createElement('div');
-
       errorDiv.textContent = "Número repetido en la columna: " + errorCells.map(cellId => cellId.slice(5)).join(", ");
-      cajaErrores.appendChild(errorDiv);
-      
-      errorCells.forEach(cellId => {
-          document.getElementById(cellId).classList.remove("checkError");
-          document.getElementById(cellId).classList.remove("checkEmpty");
-          document.getElementById(cellId).classList.add("checkError");
-      });
+      ensureErrorBox().appendChild(errorDiv); // Asegúrate de que ensureErrorBox ya está inicializado y accesible.
   }
+
+  return hasError;
 }
 
 function checkGroupDuplicates() {
@@ -232,6 +288,7 @@ function checkGroupDuplicates() {
       let errorDiv = document.createElement('div');
       errorDiv.textContent = "Número repetido en el grupo: " + errorCells.map(cellId => cellId.slice(5)).join(", ");
       cajaErrores.appendChild(errorDiv);
+
       
       errorCells.forEach(cellId => {
           document.getElementById(cellId).classList.remove("checkError");
@@ -241,25 +298,6 @@ function checkGroupDuplicates() {
   }
 }
 
-document.getElementById('botonCheckear').addEventListener('click', function() {
-  setTimeout(function () {
-      let inputs = document.querySelectorAll('.inputCasilla');
-      inputs.forEach(input => {
-          input.style.backgroundColor = '';
-      });
-
-      let cajaErrores = document.querySelector('.cajaErrores');
-      cajaErrores.innerHTML = '';
-
-      checkRowDuplicates();
-      checkColumnDuplicates();
-      checkGroupDuplicates();
-      checkEmptyCells();
-
-  }, 500);
-
-  
-});
 
 function ForbidenInput(input) {
   var valor = input.value;
@@ -627,56 +665,64 @@ function removeGroupHighlight() {
 
 
 
+var estado6 = false;
 
+document.getElementById("botonCheckear").onclick = function botonRestart() {
+  if (!estado6) {
+    estado6 = true;
+    botonActivoCheckear();
 
+    setTimeout(function() {
+      botonInactivoCheckear();
+      estado6 = false;
+    }, 1000);
+  }
+};
 
-var isChecking = false;
+function botonActivoCheckear() {
+  let boton = document.getElementById("botonCheckear");
+  let checkearShadow = document.getElementById("checkearShadow");
+  let checkearLight = document.getElementById("checkearLight");
 
-document.getElementById("botonCheckear").onclick = function botonLimpiar() {
-  if (isChecking) return;
-  isChecking = true;
-  
+  checkearLight.style.display = "block";
+  checkearLight.style.opacity = 1;
+  checkearShadow.style.opacity = 0;
+  boton.style.borderColor = "#BDAA7B";
+
+  // Use setTimeout to allow for UI updates before performing checks
+  setTimeout(function () {
+      // Clear styles and previous error indicators
+      let inputs = document.querySelectorAll('.inputCasilla');
+      inputs.forEach(input => {
+          input.style.backgroundColor = '';
+          input.classList.remove("checkError", "checkEmpty");
+      });
+
+      // Perform all checks
+      checkForErrors(); // This will internally handle error box creation and display
+
+  }, 500); // 500 ms delay allows for a smooth transition effect on the button
+}
+
+function botonInactivoCheckear() {
   let boton = document.getElementById("botonCheckear");
   let checkearShadow = document.getElementById("checkearShadow");
   let checkearLight = document.getElementById("checkearLight");
 
   checkearShadow.style.display = "block";
-  checkearLight.style.display = "block";
-  checkearLight.style.zIndex = "20";
+  checkearLight.style.opacity = 0;
+  checkearShadow.style.opacity = 1;
+  boton.style.borderColor = "black";
+}
 
-  checkearLight.style.opacity = "0";
-  checkearShadow.style.opacity = "100";
-  boton.style.borderColor = "#1d1c1c";
-
-  setTimeout(function () {
-    checkearLight.style.opacity = "1";
-    boton.style.borderColor = "#BDAA7B";
-  }, 500);
-
-  setTimeout(function () {
-    checkearLight.style.opacity = "1";
-    boton.style.borderColor = "#BDAA7B";
-  }, 1750);
-
-  setTimeout(function () {
-    checkearLight.style.opacity = "0.5";
-  }, 2000);
-
-  setTimeout(function () {
-    boton.style.borderColor = "#1d1c1c";
-    checkearLight.style.opacity = "0";
-    checkearLight.style.display = "none";
-    isChecking = false;
-  }, 2250);
-};
 
 
 var isCleaning = false;
 
 document.getElementById("botonLimpiar").onclick = function botonLimpiar() {
-  if (isCleaning) return;
-  isCleaning = true;
-  
+  if (isCleaning) return; // Evitar que la función se ejecute múltiples veces simultáneamente
+  isCleaning = true; // Indicar que se está en proceso de limpieza
+
   let boton = document.getElementById("botonLimpiar");
   let clean = document.getElementById("cleanShadow");
   let cleanGif = document.getElementById("cleanGif");
@@ -688,42 +734,40 @@ document.getElementById("botonLimpiar").onclick = function botonLimpiar() {
   cleanGif.style.transition = "opacity 1s ease-in";
 
   setTimeout(function () {
-    cleanGif.style.opacity = "50";
-    clean.style.opacity = "50";
-    boton.style.borderColor = "#BDAA7B";
+      cleanGif.style.opacity = "50";
+      clean.style.opacity = "50";
+      boton.style.borderColor = "#BDAA7B";
   }, 250);
 
   setTimeout(function () {
-    clean.style.opacity = "0";
-    clean.style.display = "none";
-    cleanGif.style.opacity = "100";
+      clean.style.opacity = "0";
+      clean.style.display = "none";
+      cleanGif.style.opacity = "100";
   }, 500);
 
   setTimeout(function () {
-    let inputCells = document.querySelectorAll('.inputCasilla');
-    inputCells.forEach(cell => {
-      if (cell.value.trim() === '') {
-        cell.classList.remove("checkError");
-        cell.classList.remove("checkEmpty");
-      }
-    });
+      let inputCells = document.querySelectorAll('.inputCasilla');
+      inputCells.forEach(cell => {
+          cell.classList.remove("checkError", "checkEmpty"); // Solo eliminamos las clases visuales
+      });
   }, 1000);
 
   setTimeout(function () {
-    clean.style.opacity = "0";
-    clean.style.display = "block";
-    cleanGif.style.opacity = "100";
+      clean.style.opacity = "0";
+      clean.style.display = "block";
+      cleanGif.style.opacity = "100";
   }, 2300);
 
   setTimeout(function () {
-    boton.style.borderColor = "rgb(29, 28, 28)";
-    cleanGif.style.opacity = "0";
-    cleanGif.style.display = "none";
-    cleanGif.src = "img/clean.gif";
-    clean.style.opacity = "1";
-    isCleaning = false;
+      boton.style.borderColor = "rgb(29, 28, 28)";
+      cleanGif.style.opacity = "0";
+      cleanGif.style.display = "none";
+      cleanGif.src = "img/clean.gif";
+      clean.style.opacity = "1";
+      isCleaning = false; // Restablecer el estado de limpieza al final del proceso
   }, 2500);
 };
+
 
 
 

@@ -31,7 +31,14 @@ td {
   border-collapse: collapse;
   padding: 10;
   height: 80px;
+  cursor: crosshair;
+  
 }
+
+tbody{
+  box-shadow:  0px 0px 40px rgba(0, 0, 0, 0.208);
+}
+
 
 td {
   border: solid rgb(44, 16, 4) 2px;
@@ -54,6 +61,7 @@ input.inputCasilla {
   font-family: 'Alef';
   text-align: center;
   cursor: default;
+  cursor: crosshair;
 }
 
 input.inputCasilla:focus {
@@ -265,6 +273,15 @@ h1{
   
 }
 
+
+#botonCheckear, #botonLimpiar, #botonRestart{
+  box-shadow:  0px 0px 20px rgba(0, 0, 0, 0.208);
+}
+
+#botonLimpiar {
+  transition: border-color 0.5s ease-in-out;
+}
+
 #clean{
   z-index: 10;
 }
@@ -300,16 +317,22 @@ h1{
   display: block;
 }
 
-#checkearLight, #checkearShadow {
-  position: absolute;
-  transition: opacity 1s ease;
+#botonCheckear {
+  transition: opacity 0.5s ease-in-out;
+  transition: border-color 0.5s ease-in-out;
+
 }
 
 #checkearLight {
+  transition: opacity 0.5s ease-in-out;
+
+  position: absolute;
   display: none;
 }
 
 #checkearShadow {
+  transition: opacity 0.5s ease-in-out;
+  position: absolute;
   display: block;
 }
 
@@ -392,24 +415,25 @@ h1{
 .cajaErrores{
   background-color: #b4a987cb;
   border: double 7px rgba(29, 28, 28, 0.344);
-  width: 600px;
+  width: 360px;
   min-height: 200px;
   display: flex;
-  margin: auto;
-  margin-top: 50px;
+  margin-left: 850px;
   border-radius: 20px;
   padding: 30px;
   font-size: 20px;
   font-weight: bold;
   color: rgb(255, 0, 0);
+  position: absolute;
   -webkit-text-stroke: 0.5px #453c33;
+  box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.12), 0px 0px 20px rgba(0, 0, 0, 0.1);
 
 
 
 }
 .cajaErrores div{
   margin-top: 10px;
-  margin-left: 30px;
+  margin-left: 10px;
 
 }
 
@@ -417,7 +441,29 @@ h1{
   margin-top: 30px;
 }
 
+.imagenError{
+  width: 26px;
+  height: 25px;
+  margin-top: -12px;
+  margin-left: 230px;
+  position: absolute;
+  box-shadow: inset 0 0 0 1px red, 1px 1px 5px #312e26a6;
+  border-radius: 18px;
+}
 
+.tituloError {
+  margin-top: -10px;
+  height: 30px;
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 0px 0px 5px rgba(238, 44, 44, 0.89);
+  color: red;
+}
+
+.subrayado {
+  text-decoration: underline;
+  text-decoration-color: red;
+}
 
 
 .botonesContainer {
