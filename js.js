@@ -138,34 +138,89 @@ function checkEmptyCells() {
   return hasEmpty;
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+  ensureErrorBox();
+  configureDraggableErrors();
+});
+
+function configureDraggableErrors() {
+  const cajaErrores = document.querySelector('.cajaErrores');
+  let isDragging = false;
+  let dragStartX = 0;
+  let dragStartY = 0;
+  let initialMarginLeft = 0; // Margen izquierdo inicial
+  let initialMarginTop = 0;  // Margen superior inicial
+
+  cajaErrores.addEventListener('mousedown', function(e) {
+    if (!e.target.matches('input, button, select, option')) {
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragStartY = e.clientY;
+      initialMarginLeft = parseInt(window.getComputedStyle(cajaErrores).marginLeft, 10);
+      initialMarginTop = parseInt(window.getComputedStyle(cajaErrores).marginTop, 10);
+      cajaErrores.style.cursor = 'move';
+      e.preventDefault();
+    }
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (isDragging) {
+      const deltaX = e.clientX - dragStartX;
+      const deltaY = e.clientY - dragStartY;
+      cajaErrores.style.marginLeft = `${initialMarginLeft + deltaX}px`; // Ajusta margin-left basándose en el desplazamiento
+      cajaErrores.style.marginTop = `${initialMarginTop + deltaY}px`;   // Ajusta margin-top basándose en el desplazamiento
+    }
+  });
+
+  document.addEventListener('mouseup', function() {
+    isDragging = false;
+    cajaErrores.style.cursor = 'default';
+  });
+}
+
+
 function ensureErrorBox() {
   let cajaErrores = document.querySelector('.cajaErrores');
   if (!cajaErrores) {
-    // Crear la caja de errores si no existe
     cajaErrores = document.createElement('div');
     cajaErrores.className = 'cajaErrores';
-    document.getElementById("caption").appendChild(cajaErrores);
+    // Cambia el posicionamiento a fixed para mantener la caja fija en la pantalla
+    cajaErrores.style.position = 'absolute';
+    document.body.appendChild(cajaErrores);
 
-    // Agregar el título al contenedor de errores
+    let barraDraggable = document.createElement('section');
+    barraDraggable.className = "barraDraggable";
+    cajaErrores.appendChild(barraDraggable);
+
+    let barraDraggableShadow = document.createElement('section');
+    barraDraggableShadow.className = "barraDraggableShadow";
+    cajaErrores.appendChild(barraDraggableShadow);
+
     let tituloError = document.createElement('section');
-    tituloError.classList.add("tituloError");
+    tituloError.className = "tituloError";
     tituloError.innerHTML = '¡ <span class="subrayado">ERROR</span> !';
     cajaErrores.appendChild(tituloError);
 
-    // Agregar una imagen al contenedor de errores
     let imagenError = document.createElement('img');
-    imagenError.classList.add("imagenError");
-    imagenError.src = 'img/error.png'; // Asegúrate de tener la ruta correcta a tu imagen aquí
-    tituloError.insertBefore(imagenError, tituloError.firstChild);
+    imagenError.className = "imagenError";
+    imagenError.src = 'img/error.png';
+    tituloError.appendChild(imagenError);
 
-    // Añadir manejador de eventos para la imagen
-    imagenError.addEventListener('click', function() {
-      cajaErrores.style.display = 'none'; // Ocultar el contenedor de errores
+    // Crear un div como hitbox
+    let imagenErrorHitbox = document.createElement('section');
+    imagenErrorHitbox.className = "imagenErrorHitbox";
+    imagenErrorHitbox.src = 'img/errorHitbox.png';
+    tituloError.appendChild(imagenErrorHitbox);
+
+    // Evento para ocultar la caja de errores
+    imagenErrorHitbox.addEventListener('click', function() {
+      cajaErrores.style.display = 'none';
     });
   }
-
   return cajaErrores;
 }
+
+
 
 
 function clearErrors() {
@@ -181,10 +236,11 @@ function addError(message) {
   let errorDiv = document.createElement('div');
   errorDiv.textContent = message;
   cajaErrores.appendChild(errorDiv);
+  configureDraggableErrors();
 }
 
 function checkForErrors() {
-  clearErrors(); // Ensure no previous errors are displayed
+  clearErrors();
   let hasErrors = false;
 
   hasErrors = checkRowDuplicates() || hasErrors;
@@ -193,7 +249,7 @@ function checkForErrors() {
   hasErrors = checkEmptyCells() || hasErrors;
 
   if (!hasErrors) {
-      clearErrors(); // Clean up if no errors are present
+      clearErrors();
   }
 }
 
@@ -232,7 +288,7 @@ function checkColumnDuplicates() {
   let hasError = false;
 
   for (let j = 1; j <= 9; j++) {
-      let columnValues = {}; // Reiniciar el seguimiento de valores para cada columna
+      let columnValues = {};
 
       for (let i = 1; i <= 9; i++) {
           let inputId = 'input' + i + '.' + j;
@@ -242,7 +298,7 @@ function checkColumnDuplicates() {
               if (columnValues[cellValue]) {
                   errorCells.push(inputId);
                   hasError = true;
-                  document.getElementById(inputId).classList.add("checkError"); // Marcar inmediatamente la celda con error
+                  document.getElementById(inputId).classList.add("checkError");
               } else {
                   columnValues[cellValue] = true;
               }
@@ -253,7 +309,7 @@ function checkColumnDuplicates() {
   if (errorCells.length > 0) {
       let errorDiv = document.createElement('div');
       errorDiv.textContent = "Número repetido en la columna: " + errorCells.map(cellId => cellId.slice(5)).join(", ");
-      ensureErrorBox().appendChild(errorDiv); // Asegúrate de que ensureErrorBox ya está inicializado y accesible.
+      ensureErrorBox().appendChild(errorDiv);
   }
 
   return hasError;
@@ -418,6 +474,7 @@ function botonActivoCross() {
   crossLight.style.opacity = 1;
   crossShadow.style.opacity = 0;
   botonCross.style.borderColor = "#BDAA7B";
+  botonCross.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
 }
 
 function botonInactivoCross() {
@@ -438,7 +495,8 @@ function botonInactivoCross() {
   crossShadow.style.display = "block";
   crossLight.style.opacity = 0;
   crossShadow.style.opacity = 1;
-  botonCross.style.borderColor = "black";
+  botonCross.style.borderColor = "rgb(29, 28, 28)";
+  botonCross.style.boxShadow = "0px 0px 0px 0px #b4a9876e, inset 0px 0px 0px 0px #b4a9876e";
 }
 
 function removeCrossHighlight(event) {
@@ -511,6 +569,7 @@ function botonActivoEquals() {
   equalsLight.style.opacity = 1;
   equalsShadow.style.opacity = 0;
   botonEquals.style.borderColor = "#BDAA7B";
+  botonEquals.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
 }
 
 function botonInactivoEquals() {
@@ -529,7 +588,8 @@ function botonInactivoEquals() {
   equalsShadow.style.display = "block";
   equalsLight.style.opacity = 0;
   equalsShadow.style.opacity = 1;
-  botonEquals.style.borderColor = "black";
+  botonEquals.style.borderColor = "rgb(29, 28, 28)";
+  botonEquals.style.boxShadow = "0px 0px 0px 0px #b4a9876e, inset 0px 0px 0px 0px #b4a9876e";
 }
 
 function removeEqualsHighlight(event) {
@@ -599,6 +659,7 @@ function botonActivoColorArea() {
   colorAreaShadow.style.display = "block";
   colorAreaLight.style.opacity = 1;
   colorAreaShadow.style.opacity = 0;
+  botonColorArea.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
 }
 
 function botonInactivoColorArea() {
@@ -613,7 +674,8 @@ function botonInactivoColorArea() {
   removeGroupHighlight();
   colorAreaLight.style.opacity = 0;
   colorAreaShadow.style.opacity = 1;
-  botonColorArea.style.borderColor = "black";
+  botonColorArea.style.borderColor = "rgb(29, 28, 28)";
+  botonColorArea.style.boxShadow = "0px 0px 0px 0px #b4a9876e, inset 0px 0px 0px 0px #b4a9876e";
 
   colorAreaLight.addEventListener('transitionend', function handler() {
     if (parseFloat(colorAreaLight.style.opacity) === 0) {
@@ -688,20 +750,18 @@ function botonActivoCheckear() {
   checkearLight.style.opacity = 1;
   checkearShadow.style.opacity = 0;
   boton.style.borderColor = "#BDAA7B";
+  boton.style.boxShadow = "0px 0px 10px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
 
-  // Use setTimeout to allow for UI updates before performing checks
   setTimeout(function () {
-      // Clear styles and previous error indicators
       let inputs = document.querySelectorAll('.inputCasilla');
       inputs.forEach(input => {
           input.style.backgroundColor = '';
           input.classList.remove("checkError", "checkEmpty");
       });
 
-      // Perform all checks
-      checkForErrors(); // This will internally handle error box creation and display
+      checkForErrors();
 
-  }, 500); // 500 ms delay allows for a smooth transition effect on the button
+  }, 500);
 }
 
 function botonInactivoCheckear() {
@@ -712,7 +772,8 @@ function botonInactivoCheckear() {
   checkearShadow.style.display = "block";
   checkearLight.style.opacity = 0;
   checkearShadow.style.opacity = 1;
-  boton.style.borderColor = "black";
+  boton.style.borderColor = "rgb(29, 28, 28)";
+  boton.style.boxShadow = "0px 0px 20px rgba(0, 0, 0, 0.208)";
 }
 
 
@@ -720,8 +781,8 @@ function botonInactivoCheckear() {
 var isCleaning = false;
 
 document.getElementById("botonLimpiar").onclick = function botonLimpiar() {
-  if (isCleaning) return; // Evitar que la función se ejecute múltiples veces simultáneamente
-  isCleaning = true; // Indicar que se está en proceso de limpieza
+  if (isCleaning) return;
+  isCleaning = true;
 
   let boton = document.getElementById("botonLimpiar");
   let clean = document.getElementById("cleanShadow");
@@ -737,6 +798,7 @@ document.getElementById("botonLimpiar").onclick = function botonLimpiar() {
       cleanGif.style.opacity = "50";
       clean.style.opacity = "50";
       boton.style.borderColor = "#BDAA7B";
+      boton.style.boxShadow = "0px 0px 10px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
   }, 250);
 
   setTimeout(function () {
@@ -748,7 +810,7 @@ document.getElementById("botonLimpiar").onclick = function botonLimpiar() {
   setTimeout(function () {
       let inputCells = document.querySelectorAll('.inputCasilla');
       inputCells.forEach(cell => {
-          cell.classList.remove("checkError", "checkEmpty"); // Solo eliminamos las clases visuales
+          cell.classList.remove("checkError", "checkEmpty");
       });
   }, 1000);
 
@@ -760,11 +822,12 @@ document.getElementById("botonLimpiar").onclick = function botonLimpiar() {
 
   setTimeout(function () {
       boton.style.borderColor = "rgb(29, 28, 28)";
+      boton.style.boxShadow = "0px 0px 20px rgba(0, 0, 0, 0.208)";
       cleanGif.style.opacity = "0";
       cleanGif.style.display = "none";
       cleanGif.src = "img/clean.gif";
       clean.style.opacity = "1";
-      isCleaning = false; // Restablecer el estado de limpieza al final del proceso
+      isCleaning = false;
   }, 2500);
 };
 
@@ -796,6 +859,7 @@ function botonActivoRestart() {
   restartLight.style.opacity = 1;
   restartShadow.style.opacity = 0;
   boton.style.borderColor = "#BDAA7B";
+  boton.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
 }
 
 function botonInactivoRestart() {
@@ -806,7 +870,8 @@ function botonInactivoRestart() {
   restartShadow.style.display = "block";
   restartLight.style.opacity = 0;
   restartShadow.style.opacity = 1;
-  boton.style.borderColor = "black";
+  boton.style.borderColor = "rgb(29, 28, 28)";
+  boton.style.boxShadow = "0px 0px 20px rgba(0, 0, 0, 0.208)";
 }
 
 
