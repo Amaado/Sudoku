@@ -145,30 +145,30 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function configureDraggableErrors() {
   const cajaErrores = document.querySelector('.cajaErrores');
+  const barraDraggableShadow = document.querySelector('.barraDraggableShadow');
+
   let isDragging = false;
   let dragStartX = 0;
   let dragStartY = 0;
-  let initialMarginLeft = 0; // Margen izquierdo inicial
-  let initialMarginTop = 0;  // Margen superior inicial
+  let initialMarginLeft = 0;
+  let initialMarginTop = 0;
 
-  cajaErrores.addEventListener('mousedown', function(e) {
-    if (!e.target.matches('input, button, select, option')) {
-      isDragging = true;
-      dragStartX = e.clientX;
-      dragStartY = e.clientY;
-      initialMarginLeft = parseInt(window.getComputedStyle(cajaErrores).marginLeft, 10);
-      initialMarginTop = parseInt(window.getComputedStyle(cajaErrores).marginTop, 10);
-      cajaErrores.style.cursor = 'move';
-      e.preventDefault();
-    }
+  barraDraggableShadow.addEventListener('mousedown', function(e) {
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    initialMarginLeft = parseInt(window.getComputedStyle(cajaErrores).marginLeft, 10);
+    initialMarginTop = parseInt(window.getComputedStyle(cajaErrores).marginTop, 10);
+    cajaErrores.style.cursor = 'move';
+    e.preventDefault();
   });
 
   document.addEventListener('mousemove', function(e) {
     if (isDragging) {
       const deltaX = e.clientX - dragStartX;
       const deltaY = e.clientY - dragStartY;
-      cajaErrores.style.marginLeft = `${initialMarginLeft + deltaX}px`; // Ajusta margin-left basándose en el desplazamiento
-      cajaErrores.style.marginTop = `${initialMarginTop + deltaY}px`;   // Ajusta margin-top basándose en el desplazamiento
+      cajaErrores.style.marginLeft = `${initialMarginLeft + deltaX}px`;
+      cajaErrores.style.marginTop = `${initialMarginTop + deltaY}px`;
     }
   });
 
@@ -179,12 +179,12 @@ function configureDraggableErrors() {
 }
 
 
+
 function ensureErrorBox() {
   let cajaErrores = document.querySelector('.cajaErrores');
   if (!cajaErrores) {
     cajaErrores = document.createElement('div');
     cajaErrores.className = 'cajaErrores';
-    // Cambia el posicionamiento a fixed para mantener la caja fija en la pantalla
     cajaErrores.style.position = 'absolute';
     document.body.appendChild(cajaErrores);
 
@@ -206,13 +206,11 @@ function ensureErrorBox() {
     imagenError.src = 'img/error.png';
     tituloError.appendChild(imagenError);
 
-    // Crear un div como hitbox
     let imagenErrorHitbox = document.createElement('section');
     imagenErrorHitbox.className = "imagenErrorHitbox";
     imagenErrorHitbox.src = 'img/errorHitbox.png';
     tituloError.appendChild(imagenErrorHitbox);
 
-    // Evento para ocultar la caja de errores
     imagenErrorHitbox.addEventListener('click', function() {
       cajaErrores.style.display = 'none';
     });
@@ -729,7 +727,7 @@ function removeGroupHighlight() {
 
 var estado6 = false;
 
-document.getElementById("botonCheckear").onclick = function botonRestart() {
+document.getElementById("botonCheckear").onclick = function botonCheckear() {
   if (!estado6) {
     estado6 = true;
     botonActivoCheckear();
@@ -776,11 +774,24 @@ function botonInactivoCheckear() {
   boton.style.boxShadow = "0px 0px 20px rgba(0, 0, 0, 0.208)";
 }
 
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    if (!estado6) {
+      estado6 = true;
+      botonActivoCheckear();
+  
+      setTimeout(function() {
+        botonInactivoCheckear();
+        estado6 = false;
+      }, 1000);
+    }
+  }
+});
 
 
 var isCleaning = false;
 
-document.getElementById("botonLimpiar").onclick = function botonLimpiar() {
+function botonLimpiar() {
   if (isCleaning) return;
   isCleaning = true;
 
@@ -829,9 +840,15 @@ document.getElementById("botonLimpiar").onclick = function botonLimpiar() {
       clean.style.opacity = "1";
       isCleaning = false;
   }, 2500);
-};
+}
 
+document.getElementById("botonLimpiar").onclick = botonLimpiar;
 
+document.addEventListener("keydown", function(event) {
+  if ((event.key === "l" || event.key === "L") && !event.target.matches("input, textarea")) {
+    botonLimpiar();
+  }
+});
 
 
 
@@ -873,6 +890,20 @@ function botonInactivoRestart() {
   boton.style.borderColor = "rgb(29, 28, 28)";
   boton.style.boxShadow = "0px 0px 20px rgba(0, 0, 0, 0.208)";
 }
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === "r" || event.key === "R") {
+    if (!estado7) {
+      estado7 = true;
+      botonActivoRestart();
+  
+      setTimeout(function() {
+        botonInactivoRestart();
+        estado7 = false;
+      }, 1000);
+    }
+  }
+});
 
 
 
