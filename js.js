@@ -234,6 +234,7 @@ function addError(message) {
   let errorDiv = document.createElement('div');
   errorDiv.textContent = message;
   cajaErrores.appendChild(errorDiv);
+  cajaErrores.style.display = "flex";
   configureDraggableErrors();
 }
 
@@ -798,7 +799,7 @@ function botonLimpiar() {
   let boton = document.getElementById("botonLimpiar");
   let clean = document.getElementById("cleanShadow");
   let cleanGif = document.getElementById("cleanGif");
-
+  let cajaErrores = ensureErrorBox();
   cleanGif.style.display = "block";
   clean.style.display = "block";
   clean.style.opacity = "100";
@@ -823,6 +824,7 @@ function botonLimpiar() {
       inputCells.forEach(cell => {
           cell.classList.remove("checkError", "checkEmpty");
       });
+      cajaErrores.style.display = "none";
   }, 1000);
 
   setTimeout(function () {

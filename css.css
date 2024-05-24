@@ -409,13 +409,13 @@ h1{
 
 
 .cajaErrores {
-  display: flex;
+  display: none;
   position: fixed;
   flex-direction: column;
   gap: 15px;
-  width: 360px; /* Width relative to viewport width */
+  width: 360px;
   min-height: 200px;
-  max-width: 360px; /* Maximum width to avoid excessive enlargement */
+  max-width: 360px;
   padding: 30px;
   background-color: #b4a987cb;
   border: double 7px rgba(29, 28, 28, 0.344);
@@ -426,8 +426,8 @@ h1{
   color: rgb(255, 0, 0);
   -webkit-text-stroke: 0.5px #453c33;
   cursor: default;
-  left: calc(50vw + 450px); /* Initially set with margin calculated in position */
-  top: 102px; /* Initially set with margin calculated in position */
+  left: calc(50vw + 450px);
+  top: 102px;
   z-index: 100;
 }
 
