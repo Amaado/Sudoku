@@ -138,6 +138,8 @@ function checkEmptyCells() {
   return hasEmpty;
 }
 
+
+
 document.addEventListener("DOMContentLoaded", function() {
   ensureErrorBox();
   configureDraggableErrors();
@@ -177,6 +179,8 @@ function configureDraggableErrors() {
     cajaErrores.style.cursor = 'default';
   });
 }
+
+
 
 
 
