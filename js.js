@@ -250,11 +250,20 @@ function checkForErrors() {
   hasErrors = checkColumnDuplicates() || hasErrors;
   hasErrors = checkGroupDuplicates() || hasErrors;
   hasErrors = checkEmptyCells() || hasErrors;
+  checkSureNumbers();
 
   if (!hasErrors) {
       clearErrors();
   }
 }
+
+function checkSureNumbers() {
+  let cells = document.getElementsByClassName("initial"); 
+  for (let i = 0; i < cells.length; i++) { 
+    cells[i].classList.add("backgroundFijo");
+  }
+}
+
 
 function checkRowDuplicates() {
   let rowIds = {};
@@ -829,6 +838,11 @@ function botonLimpiar() {
           cell.classList.remove("checkError", "checkEmpty");
       });
       cajaErrores.style.display = "none";
+
+      let cells = document.getElementsByClassName("initial"); 
+      for (let i = 0; i < cells.length; i++) { 
+        cells[i].classList.remove("backgroundFijo");
+      }
   }, 1000);
 
   setTimeout(function () {
