@@ -219,9 +219,18 @@ h1{
   width: 62px;
   height: 62px;
   -webkit-user-drag: none;
+}
 
-  
+.img3 {
+  width: 42px;
+  height: 42px;
+  -webkit-user-drag: none;
+}
 
+.img4 {
+  width: 25px;
+  height: 25px;
+  -webkit-user-drag: none;
 }
 
 #settings{
@@ -258,9 +267,8 @@ h1{
   margin-left: 5px;
   justify-content: center;
   align-items: center;
-  transition: border-color 0.5s;
+  transition: border-color 0.5s,  background-color 0.5s ease-in-out;
   background-color: #6a5c4d00;
-  transition: background-color 0.5s ease-in-out;
 
 }
 
@@ -269,13 +277,84 @@ h1{
 
 }
 
+.button3{
+  display: flex;
+  flex-direction: row;
+  padding: 2px;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border: solid 2px #1d1c1c;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-left: 5px;
+  justify-content: center;
+  align-items: center;
+  transition: border-color 0.5s ease-in-out,  background-color 0.5s ease-in-out;
+  background-color: #6a5c4d00;
+  margin-top: -24px;
+}
+
+.button3:hover{
+  background-color: #6a5c4d80;
+
+}
+
+.codigoPartida{
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  position: relative;
+  width: 380px;
+  height: 40px;
+  border: solid 2px rgb(29, 28, 28);
+  border-radius: 10px;
+  cursor: pointer;
+  margin-left: 5px;
+  justify-content: center;
+  align-items: center;
+  background-color: #6a5c4d00;
+  transition: opacity 0.5s ease-in-out, border-color 0.5s ease-in-out;
+  margin-top: -30px;
+  margin-left: -10px;
+  color: black;
+}
+
+.codigoPartida:focus{
+  border: 1px solid black;
+}
+
+.buttonCopiar{
+  display: flex;
+  flex-direction: row;
+  padding: 2px;
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 5px;
+  justify-content: center;
+  align-items: center;
+  background-color: #6a5c4d00;
+  transition: opacity 0.5s ease-in-out;
+  margin-top: -30px;
+  margin-left: 455px;
+}
+
+.buttonCopiar:hover{
+  background-color: #bdaa7b;
+}
 
 #botonCheckear, #botonLimpiar, #botonRestart{
   box-shadow:  0px 0px 20px rgba(0, 0, 0, 0.208);
+  
 }
 
 #botonLimpiar {
-  transition: border-color 0.5s ease-in-out;
+  transition: border-color 0.5s ease-in-out, background-color 0.3s ease-in-out;
+
+
 }
 
 #clean{
@@ -296,8 +375,9 @@ h1{
 
 
 #botonRestart {
-  margin-left: 400px;
-  transition: border-color 0.5s ease-in-out;
+  margin-left: 45px;
+  transition: border-color 0.5s ease-in-out,  background-color 0.3s ease-in-out;
+
 }
 
 #restartLight, #restartShadow {
@@ -314,9 +394,7 @@ h1{
 }
 
 #botonCheckear {
-  transition: opacity 0.5s ease-in-out;
-  transition: border-color 0.5s ease-in-out;
-
+  transition: opacity 0.5s ease-in-out, border-color 0.5s ease-in-out, background-color 0.3s ease-in-out;
 }
 
 #checkearLight {
@@ -329,6 +407,60 @@ h1{
   transition: opacity 0.5s ease-in-out;
   position: absolute;
   display: block;
+}
+
+#botonGuardar {
+  transition: border-color 0.5s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+#guardartLight, #guardarShadow {
+  position: absolute;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#guardarLight {
+  display: none;
+}
+
+#guardarShadow {
+  display: block;
+}
+
+#codigoPartida{
+  visibility: hidden;
+  opacity: 0%;
+  color: rgb(29, 28, 28);
+  font-weight: bold;
+  transition: opacity 0.5s ease-in-out,  border-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+#botonCopiar {
+  visibility: hidden;
+  z-index: 2;
+  opacity: 0%;
+  transition: border-color 0.5s ease-in-out, opacity 0.5s ease-in-out,  background-color 0.3s ease-in-out;
+}
+
+#copiarLight, #copiarShadow {
+  position: absolute;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#copiarLight {
+  display: none;
+}
+
+#copiarShadow {
+  display: block;
+}
+
+#textoCopiado{
+  -webkit-user-drag: none;
+  position: absolute;
+  z-index: 1;
+  width: 120px;
+  margin-top: -90px;
+  margin-left: 455px;
 }
 
 

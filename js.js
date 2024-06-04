@@ -1,3 +1,4 @@
+//Guardar en el localStorage el estado de la ruedita de ajustes
 document.addEventListener("DOMContentLoaded", function () {
   const iconoAjustes = document.getElementById("botonAjustes");
   const menu = document.getElementById("menu");
@@ -843,6 +844,9 @@ function botonLimpiar() {
       for (let i = 0; i < cells.length; i++) { 
         cells[i].classList.remove("backgroundFijo");
       }
+
+      let codigoPartida = document.getElementById('codigoPartida');
+      codigoPartida.style.opacity = 0;
   }, 1000);
 
   setTimeout(function () {
@@ -870,6 +874,77 @@ document.addEventListener("keydown", function(event) {
   }
 });
 
+
+var estado8 = false;
+
+document.getElementById("botonGuardar").onclick = function botonRestart() {
+  if (!estado8) {
+    estado8 = true;
+    botonActivoGuardar();
+
+    setTimeout(function() {
+      botonInactivoGuardar();
+      estado8 = false;
+    }, 1000);
+  }
+};
+
+function botonActivoGuardar() {
+  let guardartShadow = document.getElementById("guardarShadow");
+  let guardartLight = document.getElementById("guardarLight");
+  let boton = document.getElementById("botonGuardar");
+
+  guardartLight.style.display = "block";
+  guardartLight.style.opacity = 1;
+  guardartShadow.style.opacity = 0;
+  boton.style.borderColor = "#BDAA7B";
+  boton.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
+
+  mostrarCodigoPartida();
+}
+
+function botonInactivoGuardar() {
+  let guardartShadow = document.getElementById("guardarShadow");
+  let guardartLight = document.getElementById("guardarLight");
+  let boton = document.getElementById("botonGuardar");
+
+  guardartShadow.style.display = "block";
+  guardartLight.style.opacity = 0;
+  guardartShadow.style.opacity = 1;
+  boton.style.borderColor = "rgb(29, 28, 28)";
+  boton.style.boxShadow = "0px 0px 20px rgba(0, 0, 0, 0.208)";
+}
+
+function mostrarCodigoPartida() {
+  let codigoPartida = document.getElementById('codigoPartida');
+  let botonCopiar = document.getElementById('botonCopiar');
+  let copiartLight = document.getElementById('copiarLight');
+  let copiarShadow = document.getElementById('copiarShadow');
+
+  codigoPartida.style.color = "#BDAA7B";
+  codigoPartida.style.visibility = "visible";
+  codigoPartida.style.opacity = 1;
+  codigoPartida.value = "Texto prueba";
+  codigoPartida.style.borderColor = "#BDAA7B";
+  codigoPartida.disabled = "true";
+  codigoPartida.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
+  botonCopiar.style.visibility = "visible";
+  botonCopiar.style.opacity = 1;
+  copiartLight.style.display = "block";
+  copiartLight.style.opacity = 1;
+  copiarShadow.style.opacity = 0;
+
+  setTimeout(function() {
+    codigoPartida.style.color = "rgb(29, 28, 28)";
+    codigoPartida.style.borderColor = "rgb(29, 28, 28)";
+    codigoPartida.style.boxShadow = "0px 0px 20px rgba(0, 0, 0, 0.208)";
+    botonCopiar.style.opacity = 1;
+    copiarShadow.style.display = "block";
+    copiartLight.style.opacity = 0;
+    copiarShadow.style.opacity = 1;
+    
+  }, 1000);
+}
 
 
 
