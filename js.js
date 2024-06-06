@@ -17,6 +17,85 @@ document.addEventListener("DOMContentLoaded", function () {
   generarNumerosIniciales();
 });
 
+//Para el tooltip personalizado
+document.addEventListener("DOMContentLoaded", function() {
+  const tooltipContainer = document.querySelector('.tooltip-container');
+  let timer;  // Variable para mantener el timer
+  let lastMousePosition = { x: 0, y: 0 };  // Almacena la última posición conocida del ratón
+  let tooltipVisible = false;  // Estado para verificar si el tooltip está visible
+
+  tooltipContainer.addEventListener('mouseenter', function(e) {
+    // Reinicia el temporizador cada vez que el ratón entra
+    resetTimer(e);
+
+    // Evento para actualizar la última posición del ratón y reiniciar el temporizador
+    tooltipContainer.addEventListener('mousemove', function(ev) {
+      lastMousePosition.x = ev.clientX;
+      lastMousePosition.y = ev.clientY;
+      if (!tooltipVisible) {
+        resetTimer(ev);
+      } else {
+        // Actualiza la posición del tooltip solo si ya es visible
+        const tooltip = document.querySelector('.tooltip-text');
+        if (tooltip) positionTooltip(tooltip, ev.clientX, ev.clientY);
+      }
+    });
+  });
+
+  tooltipContainer.addEventListener('mouseleave', function() {
+    // Cancelar el temporizador y remover el tooltip al salir del mouse
+    clearTimeout(timer);
+    removeTooltip();
+    tooltipVisible = false;  // Restablecer el estado de visibilidad del tooltip
+  });
+
+  function resetTimer(event) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      showTooltip(lastMousePosition.x, lastMousePosition.y);
+      tooltipVisible = true;
+    }, 2000);  // 2 segundos de retraso
+  }
+
+  // Muestra el tooltip en la posición dada
+  function showTooltip(mouseX, mouseY) {
+    let tooltip = document.querySelector('.tooltip-text');
+
+    if (!tooltip) {
+      tooltip = document.createElement('span');
+      tooltip.className = 'tooltip-text';
+      console.log("Tooltip text:", document.querySelector('.tooltip-container').getAttribute('data-tooltip'));
+      tooltip.textContent = document.querySelector('.tooltip-container').getAttribute('data-tooltip');
+      document.body.appendChild(tooltip);
+    }
+    positionTooltip(tooltip, mouseX, mouseY);
+    tooltip.style.visibility = 'visible';
+    tooltip.style.opacity = '1';
+  }
+
+  // Posiciona el tooltip en la posición dada
+  function positionTooltip(tooltip, mouseX, mouseY) {
+    tooltip.style.left = `${mouseX + 15}px`;
+    tooltip.style.top = `${mouseY - 30}px`;
+  }
+
+  // Elimina el tooltip
+  function removeTooltip() {
+    const tooltip = document.querySelector('.tooltip-text');
+    if (tooltip) {
+      tooltip.style.opacity = '0';
+      tooltip.style.visibility = 'hidden';
+      tooltip.remove();
+    }
+  }
+});
+
+
+
+
+
+
+
 
 
 function generarNumerosIniciales() {
@@ -401,13 +480,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (active) {
-      botonAjustesLight.style.display = "block";
+      botonAjustesLight.style.visiblilit = "block";
       botonAjustesLight.style.opacity = 1;
       botonAjustesLight.style.transform = "translate(0%, 0%) rotate(420deg)";
       botonAjustesShadow.style.opacity = 0;
       botonAjustesShadow.style.transform = "translate(0%, 0%) rotate(420deg)";
     } else {
-      botonAjustesShadow.style.display = "block";
+      botonAjustesShadow.style.visibility = "visible";
       botonAjustesLight.style.opacity = 0;
       botonAjustesLight.style.transform = "translate(0%, 0%) rotate(0deg)";
       botonAjustesShadow.style.opacity = 1;
@@ -525,6 +604,9 @@ function removeCrossHighlight(event) {
 function stopPropagation(event) {
   event.stopPropagation();
 }
+
+
+
 
 document.getElementById("botonEquals").onclick = function botonEquals() {
   var boton = document.getElementById("botonEquals");
@@ -845,8 +927,6 @@ function botonLimpiar() {
         cells[i].classList.remove("backgroundFijo");
       }
 
-      let codigoPartida = document.getElementById('codigoPartida');
-      codigoPartida.style.opacity = 0;
   }, 1000);
 
   setTimeout(function () {
@@ -877,7 +957,7 @@ document.addEventListener("keydown", function(event) {
 
 var estado8 = false;
 
-document.getElementById("botonGuardar").onclick = function botonRestart() {
+document.getElementById("botonGuardar").onclick = function botonGuardar() {
   if (!estado8) {
     estado8 = true;
     botonActivoGuardar();
@@ -894,6 +974,7 @@ function botonActivoGuardar() {
   let guardartLight = document.getElementById("guardarLight");
   let boton = document.getElementById("botonGuardar");
 
+  console.log("botonActivoGuardar");
   guardartLight.style.display = "block";
   guardartLight.style.opacity = 1;
   guardartShadow.style.opacity = 0;
@@ -922,11 +1003,8 @@ function mostrarCodigoPartida() {
   let copiarShadow = document.getElementById('copiarShadow');
 
   codigoPartida.style.color = "#BDAA7B";
-  codigoPartida.style.visibility = "visible";
-  codigoPartida.style.opacity = 1;
-  codigoPartida.value = "Texto prueba";
+  codigoPartida.value = "Texto pruebaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaazzzzzzzzzzzzz";
   codigoPartida.style.borderColor = "#BDAA7B";
-  codigoPartida.disabled = "true";
   codigoPartida.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
   botonCopiar.style.visibility = "visible";
   botonCopiar.style.opacity = 1;
@@ -945,6 +1023,168 @@ function mostrarCodigoPartida() {
     
   }, 1000);
 }
+
+document.addEventListener("keydown", function(event) {
+  if ((event.key === "s" && event.shiftKey) || (event.key === "S" && event.shiftKey)) {
+    if (!estado8) {
+      estado8 = true;
+      botonActivoGuardar();
+  
+      setTimeout(function() {
+        botonInactivoGuardar();
+        estado8 = false;
+      }, 1000);
+    }
+  }
+});
+
+
+
+
+var estado9 = false;
+
+document.getElementById("botonCargar").onclick = function botonCargar() {
+  if (!estado9) {
+    estado9 = true;
+    botonActivoCargar();
+
+    setTimeout(function() {
+      botonInactivoCargar();
+      estado9 = false;
+    }, 1000);
+  }
+};
+
+function botonActivoCargar() {
+  let cargartShadow = document.getElementById("cargarShadow");
+  let cargartLight = document.getElementById("cargarLight");
+  let boton = document.getElementById("botonCargar");
+
+  cargartLight.style.display = "block";
+  cargartLight.style.opacity = 1;
+  cargartShadow.style.opacity = 0;
+  boton.style.borderColor = "#BDAA7B";
+  boton.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
+  mostrarCodigo();
+}
+
+function botonInactivoCargar() {
+  let cargartShadow = document.getElementById("cargarShadow");
+  let cargartLight = document.getElementById("cargarLight");
+  let boton = document.getElementById("botonCargar");
+
+  cargartShadow.style.display = "block";
+  cargartLight.style.opacity = 0;
+  cargartShadow.style.opacity = 1;
+  boton.style.borderColor = "rgb(29, 28, 28)";
+  boton.style.boxShadow = "0px 0px 20px rgba(0, 0, 0, 0.208)";
+}
+
+function mostrarCodigo() {
+  let codigoPartida = document.getElementById('codigoPartida');
+  let botonCargar = document.getElementById('botonCargar');
+  let cargarLight = document.getElementById('cargarLight');
+  let cargarShadow = document.getElementById('cargarShadow');
+
+  codigoPartida.style.color = "#BDAA7B";
+  codigoPartida.value = "Texto";
+  codigoPartida.style.borderColor = "#BDAA7B";
+  codigoPartida.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
+  botonCargar.style.visibility = "visible";
+  botonCargar.style.opacity = 1;
+  cargarLight.style.display = "block";
+  cargarLight.style.opacity = 1;
+  cargarShadow.style.opacity = 0;
+
+  setTimeout(function() {
+    codigoPartida.style.color = "rgb(29, 28, 28)";
+    codigoPartida.style.borderColor = "rgb(29, 28, 28)";
+    codigoPartida.style.boxShadow = "0px 0px 20px rgba(0, 0, 0, 0.208)";
+    cargarShadow.style.display = "block";
+    cargarLight.style.opacity = 0;
+    cargarShadow.style.opacity = 1;
+    
+  }, 1000);
+}
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === "u" || event.key === "U") {
+    if (!estado9) {
+      estado9 = true;
+      botonActivoCargar();
+  
+      setTimeout(function() {
+        botonInactivoCargar();
+        estado9 = false;
+      }, 1000);
+    }
+  }
+});
+
+
+
+var estado10 = false;
+
+document.getElementById("botonCopiar").onclick = function botonCopiar() {
+  if (!estado10) {
+    estado10 = true;
+    botonActivoTextoCopiado();
+
+    setTimeout(function() {
+      botonInactivoTextoCopiado();
+      estado10 = false;
+    }, 2000);
+  }
+};
+
+function botonActivoTextoCopiado() {
+  let textoCopiado = document.getElementById("textoCopiado");
+  let botonCopiar = document.getElementById("botonCopiar");
+  let codigoPartida = document.getElementById('codigoPartida');
+
+  botonCopiar.style.backgroundColor = "#bdaa7b"
+  textoCopiado.style.visibility = "visible";
+  textoCopiado.style.opacity = 1;
+
+  try {
+    let exito = document.execCommand('copy');
+    if (exito) {
+      console.log('Texto copiado al portapapeles');
+    } else {
+      console.log('Error al copiar texto');
+    }
+  } catch (err) {
+    console.log('Error al intentar copiar', err);
+  }
+  
+}
+
+function botonInactivoTextoCopiado() {
+  let textoCopiado = document.getElementById("textoCopiado");
+
+
+  textoCopiado.style.opacity = 0;
+  botonCopiar.style.backgroundColor = ""
+
+  setTimeout(function() {
+    textoCopiado.style.visibility = "hidden";
+  }, 500);
+}
+
+document.addEventListener("keydown", function(event) {
+  if ((event.key === "c"  && event.shiftKey) || (event.key === "C"  && event.shiftKey)) {
+    if (!estado10) {
+      estado10 = true;
+      botonActivoTextoCopiado();
+  
+      setTimeout(function() {
+        botonInactivoTextoCopiado();
+        estado10 = false;
+      }, 2000);
+    }
+  }
+});
+
 
 
 

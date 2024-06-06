@@ -3,6 +3,11 @@
   --cellColor: #eee6b865;
 }
 
+::selection {
+  background-color: #bdaa7b8b;
+  color: #eee6b865;
+}
+
 body {
   box-sizing: border-box;
   margin-top: 15px;
@@ -222,8 +227,8 @@ h1{
 }
 
 .img3 {
-  width: 42px;
-  height: 42px;
+  width: 35px;
+  height: 35px;
   -webkit-user-drag: none;
 }
 
@@ -277,28 +282,58 @@ h1{
 
 }
 
-.button3{
+
+.buttonCargar{
   display: flex;
   flex-direction: row;
   padding: 2px;
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 33px;
+  height: 33px;
   border: solid 2px #1d1c1c;
   border-radius: 10px;
   cursor: pointer;
-  margin-left: 5px;
   justify-content: center;
   align-items: center;
   transition: border-color 0.5s ease-in-out,  background-color 0.5s ease-in-out;
   background-color: #6a5c4d00;
-  margin-top: -24px;
+  margin-top: -29px;
+  margin-left: 5px;
+
 }
 
-.button3:hover{
+.buttonCargar:hover{
   background-color: #6a5c4d80;
 
 }
+
+
+.buttonGuardar{
+  display: flex;
+  flex-direction: row;
+  padding: 2px;
+  position: relative;
+  width: 33px;
+  height: 33px;
+  border: solid 2px #1d1c1c;
+  border-radius: 10px;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  transition: border-color 0.5s ease-in-out,  background-color 0.5s ease-in-out;
+  background-color: #6a5c4d00;
+  margin-top: -29px;
+  margin-left: -10px;
+
+}
+
+.buttonGuardar:hover{
+  background-color: #6a5c4d80;
+
+}
+
+
+
 
 .codigoPartida{
   display: flex;
@@ -310,7 +345,6 @@ h1{
   border: solid 2px rgb(29, 28, 28);
   border-radius: 10px;
   cursor: pointer;
-  margin-left: 5px;
   justify-content: center;
   align-items: center;
   background-color: #6a5c4d00;
@@ -321,7 +355,8 @@ h1{
 }
 
 .codigoPartida:focus{
-  border: 1px solid black;
+  outline: none;
+  border: solid 2px rgb(29, 28, 28);
 }
 
 .buttonCopiar{
@@ -336,10 +371,10 @@ h1{
   margin-left: 5px;
   justify-content: center;
   align-items: center;
-  background-color: #6a5c4d00;
+  background-color: #968A72;
   transition: opacity 0.5s ease-in-out;
   margin-top: -30px;
-  margin-left: 455px;
+  margin-left: 540px;
 }
 
 .buttonCopiar:hover{
@@ -375,7 +410,7 @@ h1{
 
 
 #botonRestart {
-  margin-left: 45px;
+  margin-left: -5px;
   transition: border-color 0.5s ease-in-out,  background-color 0.3s ease-in-out;
 
 }
@@ -394,6 +429,7 @@ h1{
 }
 
 #botonCheckear {
+  margin-left: -1px;
   transition: opacity 0.5s ease-in-out, border-color 0.5s ease-in-out, background-color 0.3s ease-in-out;
 }
 
@@ -426,18 +462,31 @@ h1{
   display: block;
 }
 
+#botonCargar {
+  transition: border-color 0.5s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+#cargartLight, #cargarShadow {
+  position: absolute;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#cargartLight {
+  display: none;
+}
+
+#cargarShadow {
+  display: block;
+}
+
 #codigoPartida{
-  visibility: hidden;
-  opacity: 0%;
   color: rgb(29, 28, 28);
   font-weight: bold;
   transition: opacity 0.5s ease-in-out,  border-color 0.5s ease-in-out, color 0.5s ease-in-out;
 }
 
 #botonCopiar {
-  visibility: hidden;
   z-index: 2;
-  opacity: 0%;
   transition: border-color 0.5s ease-in-out, opacity 0.5s ease-in-out,  background-color 0.3s ease-in-out;
 }
 
@@ -460,7 +509,10 @@ h1{
   z-index: 1;
   width: 120px;
   margin-top: -90px;
-  margin-left: 455px;
+  margin-left: 540px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
 }
 
 
@@ -472,7 +524,7 @@ h1{
 
 #botonAjustesLight {
   position: absolute;
-  display: none;
+  visibility: visible;
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
   
 }
@@ -664,3 +716,28 @@ h1{
   background-position: 82.75px 78px;
   background-size: 85px 80px;
 }
+
+
+
+#campoMensaje{
+  position: absolute;
+  margin-left: 190px;
+  margin-top: 40px;
+  width: 350px;
+  max-width: 350px;
+
+}
+
+.tooltip-text {
+  position: absolute;
+  visibility: hidden;
+  width: auto;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  transition: opacity 0.3s;
+  opacity: 0;
+}
+
