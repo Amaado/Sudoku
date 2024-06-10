@@ -1,3 +1,134 @@
+campoMensaje = document.getElementById("campoMensaje");
+
+//Crear código de partida
+function generarCodigoPartida(){
+  let codigo = "";
+  let codigoPartida = document.getElementById('codigoPartida');
+
+
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      let cell = document.getElementById(`${i + 1}.${j + 1}`);
+      let input = cell.querySelector(".inputCasilla");
+      if (input && input.classList.contains('initial')) {
+        //console.log(`La celda en (${i+1}, ${j+1}) es inicial.`);
+
+        codigo = codigo+"I"+input.value;
+      }else if(input.value.trim() === ''){
+        codigo = codigo+"B";
+      }else{
+        codigo = codigo + input.value;
+      }
+    }
+  }
+
+  codigoPartida.value = codigo;
+  campoMensaje.textContent = "Código generado correctamente";
+  campoMensaje.style.color = "rgb(29, 28, 28)";
+  campoMensaje.style.opacity = "1";
+  campoMensaje.style.visibility = "visible";
+  console.log("El código es: "+codigo);
+}
+
+function descodificarCodigo(codigo) {
+  if (esCodigoValido(codigo)) {
+    let index = 0;  // Índice para seguir la posición en el código
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        let id = `${i + 1}.${j + 1}`;  // ID de la celda, igual que se genera en generarCodigoPartida()
+        let cell = document.getElementById(`input${id}`);
+        if (!cell) continue;  // Si la celda no existe, continúa con la siguiente
+
+        // Resetear el estado de la celda antes de aplicar nuevos datos
+        cell.value = '';
+        cell.classList.remove('initial');
+        cell.readOnly = false;
+
+        if (index >= codigo.length) break;  // Evita leer más allá del final del código
+
+        if (codigo[index] === 'I') {
+          // El siguiente carácter después de 'I' es el número inicial
+          index++;  // Avanza al número
+          cell.value = codigo[index];
+          cell.classList.add('initial');
+          cell.readOnly = true;
+        } else if (codigo[index] === 'B') {
+          // Celda vacía
+          cell.value = '';
+        } else {
+          // Un número ingresado por el usuario
+          cell.value = codigo[index];
+        }
+        index++;  // Avanza al siguiente carácter en el código
+      }
+    }
+
+    campoMensaje.textContent = "Partida cargada con éxito";
+    campoMensaje.style.color = "rgb(29, 28, 28)";
+    campoMensaje.style.opacity = "1";
+    campoMensaje.style.visibility = "visible";
+    
+  } else if(codigo.trim() === ""){
+    campoMensaje.textContent = "No se puede cargar una partida sin su código";
+    campoMensaje.style.color = "red";
+    campoMensaje.style.opacity = "1";
+    campoMensaje.style.visibility = "visible";
+  }else{
+    campoMensaje.textContent = "El código no es válido";
+    campoMensaje.style.color = "red";
+    campoMensaje.style.opacity = "1";
+    campoMensaje.style.visibility = "visible";
+  }
+
+}
+
+
+
+function esCodigoValido(codigo) {
+  if (typeof codigo !== 'string') {
+    console.error('El código proporcionado no es un string.');
+    return false;
+  }
+
+  let contador = 0; // Este contador sumará las celdas encontradas en el código.
+  
+  for (let i = 0; i < codigo.length; i++) {
+    if (codigo[i] === 'B') {
+      // Cada 'B' representa una celda vacía.
+      contador++;
+    } else if (codigo[i] === 'I') {
+      // Si encontramos 'I', debemos asegurarnos de que hay un número después de esta letra.
+      if (i + 1 < codigo.length && !isNaN(parseInt(codigo[i + 1], 10))) {
+        // Aumentamos el índice para saltarnos el número que sigue a 'I', ya que 'I' no representa una celda por sí solo.
+        i++;
+        contador++;
+      } else {
+        // Si no hay un número válido después de 'I', el código es inválido.
+        console.error('Código inválido: se esperaba un número después de \'I\'.');
+        return false;
+      }
+    } else if (!isNaN(parseInt(codigo[i], 10))) {
+      // Cada número que no está precedido por 'I' representa una celda con un valor.
+      contador++;
+    } else {
+      // Si encontramos un carácter que no es 'B', 'I', ni un número, el código es inválido.
+      console.error('Código inválido: contiene caracteres no permitidos.');
+      return false;
+    }
+  }
+
+  // Verificar si el contador suma exactamente 81, lo cual es necesario para un tablero de Sudoku completo.
+  if (contador === 81) {
+    return true;
+  } else {
+    console.error(`Código inválido: el número de elementos es ${contador}, se esperaban 81.`);
+    return false;
+  }
+}
+
+
+
+
 //Guardar en el localStorage el estado de la ruedita de ajustes
 document.addEventListener("DOMContentLoaded", function () {
   const iconoAjustes = document.getElementById("botonAjustes");
@@ -52,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function() {
       timer = setTimeout(() => {
         showTooltip(lastMousePosition.x, lastMousePosition.y);
         tooltipVisible = true;
-      }, 800);  // 2 segundos de retraso antes de mostrar el tooltip
+      }, 1500);  // 2 segundos de retraso antes de mostrar el tooltip
     }
 
     function showTooltip(mouseX, mouseY) {
@@ -343,9 +474,18 @@ function checkForErrors() {
 }
 
 function checkSureNumbers() {
-  let cells = document.getElementsByClassName("initial"); 
-  for (let i = 0; i < cells.length; i++) { 
-    cells[i].classList.add("backgroundFijo");
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      let cell = document.getElementById(`${i + 1}.${j + 1}`);
+      let input = cell.querySelector(".inputCasilla");
+      if (input && input.classList.contains('initial')) {
+        cell.classList.add("backgroundFijo");
+
+      }else{
+        cell.classList.remove("backgroundFijo");
+
+      }
+    }
   }
 }
 
@@ -986,7 +1126,8 @@ function botonActivoGuardar() {
   boton.style.borderColor = "#BDAA7B";
   boton.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
 
-  mostrarCodigoPartida();
+  mostrarCampoCodigoPartida();
+  generarCodigoPartida();
 }
 
 function botonInactivoGuardar() {
@@ -1001,14 +1142,13 @@ function botonInactivoGuardar() {
   boton.style.boxShadow = "0px 0px 20px rgba(0, 0, 0, 0.208)";
 }
 
-function mostrarCodigoPartida() {
+function mostrarCampoCodigoPartida() {
   let codigoPartida = document.getElementById('codigoPartida');
   let botonCopiar = document.getElementById('botonCopiar');
   let copiartLight = document.getElementById('copiarLight');
   let copiarShadow = document.getElementById('copiarShadow');
 
   codigoPartida.style.color = "#BDAA7B";
-  codigoPartida.value = "Texto pruebaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaazzzzzzzzzzzzz";
   codigoPartida.style.borderColor = "#BDAA7B";
   codigoPartida.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
   botonCopiar.style.visibility = "visible";
@@ -1064,13 +1204,16 @@ function botonActivoCargar() {
   let cargartShadow = document.getElementById("cargarShadow");
   let cargartLight = document.getElementById("cargarLight");
   let boton = document.getElementById("botonCargar");
+  let codigoPartida = document.getElementById('codigoPartida');
+
 
   cargartLight.style.display = "block";
   cargartLight.style.opacity = 1;
   cargartShadow.style.opacity = 0;
   boton.style.borderColor = "#BDAA7B";
   boton.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
-  mostrarCodigo();
+  mostrarCampoCodigo();
+  descodificarCodigo(codigoPartida.value);
 }
 
 function botonInactivoCargar() {
@@ -1085,14 +1228,13 @@ function botonInactivoCargar() {
   boton.style.boxShadow = "0px 0px 20px rgba(0, 0, 0, 0.208)";
 }
 
-function mostrarCodigo() {
+function mostrarCampoCodigo() {
   let codigoPartida = document.getElementById('codigoPartida');
   let botonCargar = document.getElementById('botonCargar');
   let cargarLight = document.getElementById('cargarLight');
   let cargarShadow = document.getElementById('cargarShadow');
 
   codigoPartida.style.color = "#BDAA7B";
-  codigoPartida.value = "Texto";
   codigoPartida.style.borderColor = "#BDAA7B";
   codigoPartida.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
   botonCargar.style.visibility = "visible";
@@ -1151,16 +1293,7 @@ function botonActivoTextoCopiado() {
   textoCopiado.style.visibility = "visible";
   textoCopiado.style.opacity = 1;
 
-  try {
-    let exito = document.execCommand('copy');
-    if (exito) {
-      console.log('Texto copiado al portapapeles');
-    } else {
-      console.log('Error al copiar texto');
-    }
-  } catch (err) {
-    console.log('Error al intentar copiar', err);
-  }
+  copyTextToClipboard(codigoPartida.textContent);
   
 }
 
@@ -1174,6 +1307,20 @@ function botonInactivoTextoCopiado() {
   setTimeout(function() {
     textoCopiado.style.visibility = "hidden";
   }, 500);
+}
+
+async function copyTextToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    console.log('Texto copiado al portapapeles');
+
+    campoMensaje.textContent = "Código copiado";
+    campoMensaje.style.color = "rgb(29, 28, 28)";
+    campoMensaje.style.opacity = "1";
+    campoMensaje.style.visibility = "visible";
+  } catch (err) {
+    console.log('Error al copiar texto', err);
+  }
 }
 
 document.addEventListener("keydown", function(event) {
