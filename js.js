@@ -19,76 +19,81 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //Para el tooltip personalizado
 document.addEventListener("DOMContentLoaded", function() {
-  const tooltipContainer = document.querySelector('.tooltip-container');
-  let timer;  // Variable para mantener el timer
-  let lastMousePosition = { x: 0, y: 0 };  // Almacena la última posición conocida del ratón
-  let tooltipVisible = false;  // Estado para verificar si el tooltip está visible
+  const tooltipContainers = document.querySelectorAll('.tooltip-container');
 
-  tooltipContainer.addEventListener('mouseenter', function(e) {
-    // Reinicia el temporizador cada vez que el ratón entra
-    resetTimer(e);
+  tooltipContainers.forEach(tooltipContainer => {
+    let timer;  // Mover el timer dentro del loop para manejarlo localmente por cada container
+    let lastMousePosition = { x: 0, y: 0 };
+    let tooltipVisible = false;
+    let tooltip;  // Localizar la referencia de tooltip para cada container
 
-    // Evento para actualizar la última posición del ratón y reiniciar el temporizador
+    tooltipContainer.addEventListener('mouseenter', function(e) {
+      resetTimer(e);
+    });
+
     tooltipContainer.addEventListener('mousemove', function(ev) {
       lastMousePosition.x = ev.clientX;
       lastMousePosition.y = ev.clientY;
       if (!tooltipVisible) {
         resetTimer(ev);
-      } else {
-        // Actualiza la posición del tooltip solo si ya es visible
-        const tooltip = document.querySelector('.tooltip-text');
-        if (tooltip) positionTooltip(tooltip, ev.clientX, ev.clientY);
+      } else if (tooltip) {
+        positionTooltip(tooltip, ev.clientX, ev.clientY);
       }
     });
-  });
 
-  tooltipContainer.addEventListener('mouseleave', function() {
-    // Cancelar el temporizador y remover el tooltip al salir del mouse
-    clearTimeout(timer);
-    removeTooltip();
-    tooltipVisible = false;  // Restablecer el estado de visibilidad del tooltip
-  });
+    tooltipContainer.addEventListener('mouseleave', function() {
+      clearTimeout(timer);
+      removeTooltip();
+      tooltipVisible = false;
+    });
 
-  function resetTimer(event) {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      showTooltip(lastMousePosition.x, lastMousePosition.y);
-      tooltipVisible = true;
-    }, 2000);  // 2 segundos de retraso
-  }
-
-  // Muestra el tooltip en la posición dada
-  function showTooltip(mouseX, mouseY) {
-    let tooltip = document.querySelector('.tooltip-text');
-
-    if (!tooltip) {
-      tooltip = document.createElement('span');
-      tooltip.className = 'tooltip-text';
-      console.log("Tooltip text:", document.querySelector('.tooltip-container').getAttribute('data-tooltip'));
-      tooltip.textContent = document.querySelector('.tooltip-container').getAttribute('data-tooltip');
-      document.body.appendChild(tooltip);
+    function resetTimer(event) {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        showTooltip(lastMousePosition.x, lastMousePosition.y);
+        tooltipVisible = true;
+      }, 800);  // 2 segundos de retraso antes de mostrar el tooltip
     }
-    positionTooltip(tooltip, mouseX, mouseY);
-    tooltip.style.visibility = 'visible';
-    tooltip.style.opacity = '1';
-  }
 
-  // Posiciona el tooltip en la posición dada
-  function positionTooltip(tooltip, mouseX, mouseY) {
-    tooltip.style.left = `${mouseX + 15}px`;
-    tooltip.style.top = `${mouseY - 30}px`;
-  }
-
-  // Elimina el tooltip
-  function removeTooltip() {
-    const tooltip = document.querySelector('.tooltip-text');
-    if (tooltip) {
-      tooltip.style.opacity = '0';
-      tooltip.style.visibility = 'hidden';
-      tooltip.remove();
+    function showTooltip(mouseX, mouseY) {
+      if (!tooltip) {
+        tooltip = createTooltip();
+      }
+      tooltip.style.left = `${mouseX + 15}px`;
+      tooltip.style.top = `${mouseY - 30}px`;
+      tooltip.style.visibility = 'visible';
+      setTimeout(() => tooltip.style.opacity = '0.9', 10);  // Transición a completamente visible
     }
-  }
+
+    function createTooltip() {
+      let newTooltip = document.createElement('div');
+      newTooltip.className = 'tooltip-text';
+      newTooltip.textContent = tooltipContainer.getAttribute('data-tooltip');
+      document.body.appendChild(newTooltip);
+      newTooltip.style.opacity = '0';  // Inicialmente transparente
+      return newTooltip;
+    }
+
+    function removeTooltip() {
+      if (tooltip) {
+        tooltip.style.opacity = '0';  // Inicia la transición a invisible
+        setTimeout(() => {
+          tooltip.style.visibility = 'hidden';
+          tooltip.remove();
+          tooltip = null;  // Limpiar la referencia para permitir la recreación
+        }, 500); // Espera 500 ms para completar la transición antes de eliminar
+      }
+    }
+
+    function positionTooltip(tooltip, mouseX, mouseY) {
+      tooltip.style.left = `${mouseX + 15}px`;
+      tooltip.style.top = `${mouseY - 30}px`;
+    }
+  });
 });
+
+
+
 
 
 
