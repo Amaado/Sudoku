@@ -1144,9 +1144,14 @@ function botonLimpiar() {
       });
       cajaErrores.style.display = "none";
 
-      let cells = document.getElementsByClassName("initial"); 
-      for (let i = 0; i < cells.length; i++) { 
-        cells[i].classList.remove("backgroundFijo");
+      for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+          let cells = document.getElementById(`${i + 1}.${j + 1}`);
+          let input = cells.querySelector(".inputCasilla");
+          if (input && input.classList.contains('initial')) {
+            cells.classList.remove("backgroundFijo");
+          }
+        }
       }
 
   }, 1000);
@@ -1402,15 +1407,18 @@ function botonInactivoTextoCopiado() {
   }, 500);
 }
 
-if (navigator.clipboard) {
-  navigator.clipboard.writeText(text).then(function() {
-    console.log('Texto copiado al portapapeles');
-  }).catch(function(err) {
-    console.error('Error al copiar texto', err);
-  });
-} else {
-  console.log('La API del portapapeles no está soportada en este navegador');
+async function copyTextToClipboard(text) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function() {
+      console.log('Texto copiado al portapapeles');
+    }).catch(function(err) {
+      console.error('Error al copiar texto', err);
+    });
+  } else {
+    console.log('La API del portapapeles no está soportada en este navegador');
+  }
 }
+
 
 
 document.addEventListener("keydown", function(event) {
