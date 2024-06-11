@@ -1391,7 +1391,6 @@ function botonActivoTextoCopiado() {
   textoCopiado.style.visibility = "visible";
   textoCopiado.style.opacity = 1;
 
-  //copyTextToClipboard(codigoPartida.textContent);
   copyTextToClipboard(codigoPartida.textContent);
 
   
@@ -1409,9 +1408,9 @@ function botonInactivoTextoCopiado() {
   }, 500);
 }
 
-async function copyTextToClipboard() {
+async function copyTextToClipboard(text) {
   try {
-    await navigator.clipboard.writeText('Este es el texto a copiar');
+    await navigator.clipboard.writeText(text);
     console.log('Contenido copiado al portapapeles');
     /* Resuelto - texto copiado al portapapeles con éxito */
   } catch (err) {
