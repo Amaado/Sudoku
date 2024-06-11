@@ -1491,4 +1491,13 @@ document.addEventListener("keydown", function(event) {
 
 
 
+let imageContainer = document.querySelector('.redes');
+let imageHover = document.querySelector('.redes-hover');
 
+imageContainer.addEventListener('mouseover', () => {
+    imageHover.style.opacity = 1;
+});
+
+imageContainer.addEventListener('mouseout', () => {
+    imageHover.style.opacity = 0;
+});
