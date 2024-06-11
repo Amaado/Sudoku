@@ -3,12 +3,12 @@
   --cellColor: #eee6b865;
   --notification-background: #313e2c;
   --notification-primary: #aaec8a;
-  --background: #FAF9FF;
+
 }
 
 ::selection {
   background-color: #bdaa7b8b;
-  color: #eee6b865;
+  color: #eee6b8;
 }
 
 body {
@@ -735,18 +735,7 @@ h1{
   box-shadow:  0px 0px 20px rgba(0, 0, 0, 0.3);
 
 }
-/*
-#campoMensaje{
-  position: absolute;
-  margin-left: 200px;
-  margin-top: 50px;
-  width: 350px;
-  max-width: 350px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 1s ease-in-out;
-}
-*/
+
 
 /*Notificación*/
 
@@ -760,6 +749,24 @@ h1{
   border-radius: 0.375rem;
   background-color: var(--notification-background);
   color: var(--notification-primary);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+  transform: translateX(-50%) translateY(1.875rem); /* Centrar y preparar para animación */
+  opacity: 0;
+  visibility: hidden; /* Asegurarse de que empiece invisible */
+  transition: opacity 0.5s, transform 0.5s; /* Suavizar la transición de visibilidad y movimiento */
+  z-index: 100;
+}
+
+.notificationR {
+  position: fixed; /* Cambiado de absolute a fixed para no desplazar otros elementos */
+  width: max-content;
+  left: 50%;
+  bottom: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 0.375rem;
+  background-color: #3e2c2c;
+  color: #ec8a8a;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
   transform: translateX(-50%) translateY(1.875rem); /* Centrar y preparar para animación */
   opacity: 0;
@@ -794,6 +801,22 @@ h1{
       to right, 
       var(--notification-background),  
       var(--notification-primary)
+  );
+  border-radius: inherit;
+}
+
+.notification__progressR {
+  position: absolute;
+  left: 0.25rem;
+  bottom: 0.25rem;
+  width: calc(100% - 0.5rem);
+  height: 0.2rem;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(
+      to right, 
+      #3e2c2c,  
+      #ec8a8a
   );
   border-radius: inherit;
 }

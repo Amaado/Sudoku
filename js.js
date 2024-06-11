@@ -5,10 +5,11 @@ let contenidoNotif = document.querySelector('.notification__body');
 let newIcon = document.querySelector('.notification__icon');
 let isNotificationActive = false;
 
-function showNotification(contenido, tipo) {
+function showNotification(contenido, logo, estilo) {
   isNotificationActive = true; // Establecer que la notificación está activa
   
   document.getElementById('botonGuardar').disabled = true; // Deshabilitar el botón de guardar
+  document.getElementById('botonCargar').disabled = true; // Deshabilitar el botón de guardar
 
   progressBar.style.transform = 'scaleX(0)';
   progressBar.offsetHeight; // Forzar el repintado para resetear la animación
@@ -17,29 +18,49 @@ function showNotification(contenido, tipo) {
   notification.style.opacity = '1';
   notification.style.transform = 'translateX(-50%) translateY(0)';
 
-  //contenidoNotif.textContent = contenido;
-  let nodes = document.getElementById('notification__body').childNodes;
 
+  let nodes = document.getElementById('notification__body').childNodes;
   for(var i = 0; i < nodes.length; i++) {
       if(nodes[i].nodeType == 3) {       // If it is a text node,
-          nodes[2].nodeValue = "hola";  //    add its text to the result
+          nodes[2].nodeValue = contenido;  //    add its text to the result
       }
   }
   
+  switch(estilo) {
+    case 'rojo':
+      notification.style.color = '#ec8a8a';
+      notification.style.backgroundColor  = '#3e2c2c';
+      progressBar.style.background = 'linear-gradient(to right, #3e2c2c, #ec8a8a)';
+      break;
+    case 'verde':
+      notification.style.color = '#aaec8a';
+      notification.style.backgroundColor  = '#313e2c';
+      progressBar.style.background = 'linear-gradient(to right, #313e2c, #aaec8a)';
+      break;
+  }
 
-    // Asignar el icono dependiendo del tipo de notificación
-    let iconPath = '';
-    switch(tipo) {
-      case 'check':
-        iconPath = 'img/check-circle.svg'; // Asegúrate de que esta ruta es correcta
-        break;
-      case 'error':
-        iconPath = 'img/error-icon.svg'; // Asegúrate de que esta ruta es correcta
-        break;
-      default:
-        iconPath = 'img/check-circle.svg'; // Icono predeterminado o de información
-    }
-    newIcon.src = iconPath;
+  // Asignar el icono dependiendo del tipo de notificación
+  let iconPath = '';
+  switch(logo) {
+    case 'guardar':
+      iconPath = 'img/hashtagGreen.png'; // Asegúrate de que esta ruta es correcta
+      break;
+    case 'guardarE':
+      iconPath = 'img/hashtagRed.png'; // Asegúrate de que esta ruta es correcta
+      break;
+    case 'cargar':
+      iconPath = 'img/cloudGreen.png'; // Asegúrate de que esta ruta es correcta
+      break;
+    case 'cargarE':
+      iconPath = 'img/cloudRed.png'; // Asegúrate de que esta ruta es correcta
+      break;
+    case 'error':
+      iconPath = 'img/error.png'; // Asegúrate de que esta ruta es correcta
+      break;
+    default:
+      iconPath = 'img/check-circle.svg'; // Icono predeterminado o de información
+  }
+  newIcon.src = iconPath;
 
   setTimeout(() => {
     progressBar.style.transition = 'transform 2.5s linear';
@@ -89,11 +110,6 @@ function generarCodigoPartida(){
     }
   }
 
-  /*
-  campoMensaje.textContent = "Código generado correctamente";
-  campoMensaje.style.color = "rgb(29, 28, 28)";
-  campoMensaje.style.opacity = "1";
-  campoMensaje.style.visibility = "visible";*/
   console.log("El código es: "+codigo);
   codigoPartida.value = codigo;
 }
@@ -131,21 +147,14 @@ function descodificarCodigo(codigo) {
       }
     }
 
-    campoMensaje.textContent = "Partida cargada con éxito";
-    campoMensaje.style.color = "rgb(29, 28, 28)";
-    campoMensaje.style.opacity = "1";
-    campoMensaje.style.visibility = "visible";
+    showNotification("Partida cargada con éxito", "cargar", "verde");
     
   } else if(codigo.trim() === ""){
-    campoMensaje.textContent = "No se puede cargar una partida sin su código";
-    campoMensaje.style.color = "red";
-    campoMensaje.style.opacity = "1";
-    campoMensaje.style.visibility = "visible";
+    showNotification("El campo del código está vacío", "cargarE", "rojo");
+
   }else{
-    campoMensaje.textContent = "El código no es válido";
-    campoMensaje.style.color = "red";
-    campoMensaje.style.opacity = "1";
-    campoMensaje.style.visibility = "visible";
+    showNotification("El código no es válido", "cargarE", "rojo");
+
   }
 
 }
@@ -1199,7 +1208,7 @@ function botonActivoGuardar() {
 
   mostrarCampoCodigoPartida();
   generarCodigoPartida();
-  showNotification("Código generado correctamente", "check");
+  showNotification("Código generado correctamente", "guardar", "verde");
 }
 
 function botonInactivoGuardar() {
@@ -1265,6 +1274,9 @@ document.addEventListener("keydown", function(event) {
 var estado9 = false;
 
 document.getElementById("botonCargar").onclick = function botonCargar() {
+  if (isNotificationActive) {
+    return;
+  }
   if (!estado9) {
     estado9 = true;
     botonActivoCargar();
@@ -1290,6 +1302,8 @@ function botonActivoCargar() {
   boton.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
   mostrarCampoCodigo();
   descodificarCodigo(codigoPartida.value);
+  console.log('cargar');
+
 }
 
 function botonInactivoCargar() {
@@ -1300,7 +1314,7 @@ function botonInactivoCargar() {
   cargartShadow.style.display = "block";
   cargartLight.style.opacity = 0;
   cargartShadow.style.opacity = 1;
-  boton.style.borderColor = "rgb(29, 28, 28)";
+  boton.style.borderColor = "#1d1c1c";
   boton.style.boxShadow = "0px 0px 20px rgba(0, 0, 0, 0.208)";
 }
 
@@ -1332,6 +1346,9 @@ function mostrarCampoCodigo() {
 
 document.addEventListener("keydown", function(event) {
   if (event.key === "u" || event.key === "U") {
+    if (isNotificationActive) {
+      return;
+    }
     if (!estado9) {
       estado9 = true;
       botonActivoCargar();
@@ -1385,19 +1402,16 @@ function botonInactivoTextoCopiado() {
   }, 500);
 }
 
-async function copyTextToClipboard(text) {
-  try {
-    await navigator.clipboard.writeText(text);
+if (navigator.clipboard) {
+  navigator.clipboard.writeText(text).then(function() {
     console.log('Texto copiado al portapapeles');
-
-    campoMensaje.textContent = "Código copiado";
-    campoMensaje.style.color = "rgb(29, 28, 28)";
-    campoMensaje.style.opacity = "1";
-    campoMensaje.style.visibility = "visible";
-  } catch (err) {
-    console.log('Error al copiar texto', err);
-  }
+  }).catch(function(err) {
+    console.error('Error al copiar texto', err);
+  });
+} else {
+  console.log('La API del portapapeles no está soportada en este navegador');
 }
+
 
 document.addEventListener("keydown", function(event) {
   if ((event.key === "c"  && event.shiftKey) || (event.key === "C"  && event.shiftKey)) {
