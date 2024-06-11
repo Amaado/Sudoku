@@ -1391,7 +1391,7 @@ function botonActivoTextoCopiado() {
   textoCopiado.style.visibility = "visible";
   textoCopiado.style.opacity = 1;
 
-  copyTextToClipboard(codigoPartida.textContent);
+  copyTextToClipboard(codigoPartida.value);
 
   
 }
@@ -1412,10 +1412,8 @@ async function copyTextToClipboard(text) {
   try {
     await navigator.clipboard.writeText(text);
     console.log('Contenido copiado al portapapeles');
-    /* Resuelto - texto copiado al portapapeles con éxito */
   } catch (err) {
     console.error('Error al copiar: ', err);
-    /* Rechazado - fallo al copiar el texto al portapapeles */
   }
 }
 

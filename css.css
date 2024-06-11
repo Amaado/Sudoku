@@ -838,3 +838,36 @@ h1{
       transform: scaleX(1);
   }
 }
+
+
+
+#redes{
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  bottom: 1.5vh;
+  right: 1.5vw;
+}
+
+.redes{
+  width: 25px;
+  height: 25px;
+  -webkit-user-drag: none;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0.6;
+}
+
+.redes:hover{
+  opacity: 1;
+}
+
+footer div{
+  font-style: italic;
+  margin-top: 4px;
+  margin-right: 20px;
+}
+
+footer a{
+  margin-top: 3px;
+}
