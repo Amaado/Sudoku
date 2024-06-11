@@ -1,4 +1,71 @@
-campoMensaje = document.getElementById("campoMensaje");
+let notification = document.querySelector('.notification');
+let notificationIcon = document.querySelector('.notification__icon');
+let progressBar = document.querySelector('.notification__progress');
+let contenidoNotif = document.querySelector('.notification__body');
+let newIcon = document.querySelector('.notification__icon');
+let isNotificationActive = false;
+
+function showNotification(contenido, tipo) {
+  isNotificationActive = true; // Establecer que la notificación está activa
+  
+  document.getElementById('botonGuardar').disabled = true; // Deshabilitar el botón de guardar
+
+  progressBar.style.transform = 'scaleX(0)';
+  progressBar.offsetHeight; // Forzar el repintado para resetear la animación
+
+  notification.style.visibility = 'visible';
+  notification.style.opacity = '1';
+  notification.style.transform = 'translateX(-50%) translateY(0)';
+
+  //contenidoNotif.textContent = contenido;
+  let nodes = document.getElementById('notification__body').childNodes;
+
+  for(var i = 0; i < nodes.length; i++) {
+      if(nodes[i].nodeType == 3) {       // If it is a text node,
+          nodes[2].nodeValue = "hola";  //    add its text to the result
+      }
+  }
+  
+
+    // Asignar el icono dependiendo del tipo de notificación
+    let iconPath = '';
+    switch(tipo) {
+      case 'check':
+        iconPath = 'img/check-circle.svg'; // Asegúrate de que esta ruta es correcta
+        break;
+      case 'error':
+        iconPath = 'img/error-icon.svg'; // Asegúrate de que esta ruta es correcta
+        break;
+      default:
+        iconPath = 'img/check-circle.svg'; // Icono predeterminado o de información
+    }
+    newIcon.src = iconPath;
+
+  setTimeout(() => {
+    progressBar.style.transition = 'transform 2.5s linear';
+    progressBar.style.transform = 'scaleX(1)';
+  }, 100);
+
+  setTimeout(hideNotification, 2600);
+}
+
+function hideNotification() {
+  notification.style.opacity = '0';
+  notification.style.transform = 'translateX(-50%) translateY(1.875rem)';
+
+  setTimeout(() => {
+    progressBar.style.transform = 'scaleX(0)';
+    progressBar.style.transition = 'none';
+    notification.style.visibility = 'hidden';
+    isNotificationActive = false; // Resetear que la notificación no está activa
+    document.getElementById('botonGuardar').disabled = false; // Habilitar el botón de guardar
+  }, 500);
+}
+
+
+
+
+
 
 //Crear código de partida
 function generarCodigoPartida(){
@@ -22,12 +89,13 @@ function generarCodigoPartida(){
     }
   }
 
-  codigoPartida.value = codigo;
+  /*
   campoMensaje.textContent = "Código generado correctamente";
   campoMensaje.style.color = "rgb(29, 28, 28)";
   campoMensaje.style.opacity = "1";
-  campoMensaje.style.visibility = "visible";
+  campoMensaje.style.visibility = "visible";*/
   console.log("El código es: "+codigo);
+  codigoPartida.value = codigo;
 }
 
 function descodificarCodigo(codigo) {
@@ -1103,6 +1171,10 @@ document.addEventListener("keydown", function(event) {
 var estado8 = false;
 
 document.getElementById("botonGuardar").onclick = function botonGuardar() {
+  if (isNotificationActive) {
+    return;
+  }
+
   if (!estado8) {
     estado8 = true;
     botonActivoGuardar();
@@ -1119,7 +1191,6 @@ function botonActivoGuardar() {
   let guardartLight = document.getElementById("guardarLight");
   let boton = document.getElementById("botonGuardar");
 
-  console.log("botonActivoGuardar");
   guardartLight.style.display = "block";
   guardartLight.style.opacity = 1;
   guardartShadow.style.opacity = 0;
@@ -1128,6 +1199,7 @@ function botonActivoGuardar() {
 
   mostrarCampoCodigoPartida();
   generarCodigoPartida();
+  showNotification("Código generado correctamente", "check");
 }
 
 function botonInactivoGuardar() {
@@ -1171,6 +1243,10 @@ function mostrarCampoCodigoPartida() {
 
 document.addEventListener("keydown", function(event) {
   if ((event.key === "s" && event.shiftKey) || (event.key === "S" && event.shiftKey)) {
+    if (isNotificationActive) {
+      return;
+    }
+    
     if (!estado8) {
       estado8 = true;
       botonActivoGuardar();
