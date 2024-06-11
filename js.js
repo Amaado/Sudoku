@@ -181,7 +181,7 @@ function esCodigoValido(codigo) {
         contador++;
       } else {
         // Si no hay un número válido después de 'I', el código es inválido.
-        console.error('Código inválido: se esperaba un número después de \'I\'.');
+        console.log('Código inválido: se esperaba un número después de \'I\'.');
         return false;
       }
     } else if (!isNaN(parseInt(codigo[i], 10))) {
@@ -189,7 +189,7 @@ function esCodigoValido(codigo) {
       contador++;
     } else {
       // Si encontramos un carácter que no es 'B', 'I', ni un número, el código es inválido.
-      console.error('Código inválido: contiene caracteres no permitidos.');
+      console.log('Código inválido: contiene caracteres no permitidos.');
       return false;
     }
   }
@@ -198,7 +198,7 @@ function esCodigoValido(codigo) {
   if (contador === 81) {
     return true;
   } else {
-    console.error(`Código inválido: el número de elementos es ${contador}, se esperaban 81.`);
+    console.log(`Código inválido: el número de elementos es ${contador}, se esperaban 81.`);
     return false;
   }
 }
@@ -1391,7 +1391,9 @@ function botonActivoTextoCopiado() {
   textoCopiado.style.visibility = "visible";
   textoCopiado.style.opacity = 1;
 
+  //copyTextToClipboard(codigoPartida.textContent);
   copyTextToClipboard(codigoPartida.textContent);
+
   
 }
 
@@ -1407,15 +1409,14 @@ function botonInactivoTextoCopiado() {
   }, 500);
 }
 
-async function copyTextToClipboard(text) {
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(function() {
-      console.log('Texto copiado al portapapeles');
-    }).catch(function(err) {
-      console.error('Error al copiar texto', err);
-    });
-  } else {
-    console.log('La API del portapapeles no está soportada en este navegador');
+async function copyTextToClipboard() {
+  try {
+    await navigator.clipboard.writeText('Este es el texto a copiar');
+    console.log('Contenido copiado al portapapeles');
+    /* Resuelto - texto copiado al portapapeles con éxito */
+  } catch (err) {
+    console.error('Error al copiar: ', err);
+    /* Rechazado - fallo al copiar el texto al portapapeles */
   }
 }
 
