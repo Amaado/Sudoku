@@ -1042,6 +1042,80 @@ function removeGroupHighlight() {
 
 
 
+document.getElementById("botonRegla").onclick = function botonRegla() {
+  var boton = document.getElementById("botonRegla");
+  var estado5 = localStorage.getItem("estado5") === "true";
+
+  estado5 = !estado5;
+
+  localStorage.setItem("estado5", estado5);
+
+  if (estado5) {
+    botonActivoRegla();
+  } else {
+    botonInactivoRegla();
+  }
+};
+
+document.addEventListener("DOMContentLoaded", function() {
+  var botonRegla = document.getElementById("botonRegla");
+  var estado5 = localStorage.getItem("estado5") === "true";
+
+  if (estado5) {
+    botonActivoRegla();
+  } else {
+    botonInactivoRegla();
+  }
+
+  botonRegla.onclick = function() {
+    estado5 = !estado5;
+    localStorage.setItem("estado5", estado5);
+
+    if (estado5) {
+      botonActivoRegla();
+    } else {
+      botonInactivoRegla();
+    }
+  };
+});
+
+function botonActivoRegla() {
+  var reglaLight = document.getElementById("reglaLight");
+  var reglaShadow = document.getElementById("reglaShadow");
+  var regla = document.getElementById("regla");
+  var h1 = document.getElementById("h1");
+
+  h1.style.marginTop = "0px";
+  regla.style.visibility = "visible";
+  regla.style.opacity = 1;
+
+  botonRegla.style.borderColor = "#BDAA7B";
+  reglaLight.style.display = "block";
+  reglaShadow.style.display = "block";
+  reglaLight.style.opacity = 1;
+  reglaShadow.style.opacity = 0;
+  botonRegla.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
+}
+
+function botonInactivoRegla() {
+  var reglaLight = document.getElementById("reglaLight");
+  var reglaShadow = document.getElementById("reglaShadow");
+  var regla = document.getElementById("regla");
+  var h1 = document.getElementById("h1");
+
+  h1.style.removeProperty('margin-top');
+  regla.style.opacity = 0;
+
+  reglaLight.style.opacity = 0;
+  reglaShadow.style.opacity = 1;
+  botonRegla.style.borderColor = "rgb(29, 28, 28)";
+  botonRegla.style.boxShadow = "0px 0px 0px 0px #b4a9876e, inset 0px 0px 0px 0px #b4a9876e";
+  reglaLight.style.display = 'none';
+  reglaShadow.style.display = 'block';
+
+
+}
+
 
 
 var estado6 = false;
