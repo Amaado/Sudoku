@@ -11,6 +11,30 @@ function showNotification(contenido, logo, estilo) {
   document.getElementById('botonGuardar').disabled = true; // Deshabilitar el botón de guardar
   document.getElementById('botonCargar').disabled = true; // Deshabilitar el botón de guardar
 
+  // Asignar el icono dependiendo del tipo de notificación
+  let iconPath = '';
+  switch(logo) {
+    case 'guardar':
+      iconPath = 'img/hashtagGreen.png'; // Asegúrate de que esta ruta es correcta
+      break;
+    case 'guardarE':
+      iconPath = 'img/hashtagRed.png'; // Asegúrate de que esta ruta es correcta
+      break;
+    case 'cargar':
+      iconPath = 'img/cloudGreen.png'; // Asegúrate de que esta ruta es correcta
+      break;
+    case 'cargarE':
+      iconPath = 'img/cloudRed.png'; // Asegúrate de que esta ruta es correcta
+      break;
+    case 'error':
+      iconPath = 'img/error.png'; // Asegúrate de que esta ruta es correcta
+      break;
+    default:
+      iconPath = 'img/check-circle.svg'; // Icono predeterminado o de información
+  }
+  newIcon.src = iconPath;
+
+
   progressBar.style.transform = 'scaleX(0)';
   progressBar.offsetHeight; // Forzar el repintado para resetear la animación
 
@@ -38,29 +62,6 @@ function showNotification(contenido, logo, estilo) {
       progressBar.style.background = 'linear-gradient(to right, #313e2c, #aaec8a)';
       break;
   }
-
-  // Asignar el icono dependiendo del tipo de notificación
-  let iconPath = '';
-  switch(logo) {
-    case 'guardar':
-      iconPath = 'img/hashtagGreen.png'; // Asegúrate de que esta ruta es correcta
-      break;
-    case 'guardarE':
-      iconPath = 'img/hashtagRed.png'; // Asegúrate de que esta ruta es correcta
-      break;
-    case 'cargar':
-      iconPath = 'img/cloudGreen.png'; // Asegúrate de que esta ruta es correcta
-      break;
-    case 'cargarE':
-      iconPath = 'img/cloudRed.png'; // Asegúrate de que esta ruta es correcta
-      break;
-    case 'error':
-      iconPath = 'img/error.png'; // Asegúrate de que esta ruta es correcta
-      break;
-    default:
-      iconPath = 'img/check-circle.svg'; // Icono predeterminado o de información
-  }
-  newIcon.src = iconPath;
 
   setTimeout(() => {
     progressBar.style.transition = 'transform 2.5s linear';
