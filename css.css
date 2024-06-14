@@ -1,5 +1,5 @@
 :root {
-  --hoverColor: #c7ba7165;
+  --hoverColor: #c7ba71f6;
   --cellColor: #eee6b865;
   --notification-background: #313e2c;
   --notification-primary: #aaec8a;
@@ -14,7 +14,7 @@
 body {
   box-sizing: border-box;
   margin-top: 15px;
-  background-color: #5c44179a;
+  background-color: #9D8E73;
   font-family: 'Arial';
   z-index: -1;
 }
@@ -377,7 +377,7 @@ h1{
   margin-left: 5px;
   justify-content: center;
   align-items: center;
-  background-color: #968A72;
+  background-color: #6a5c4d00;
   transition: opacity 0.5s ease-in-out;
   margin-top: -30px;
   margin-left: 540px;
@@ -604,13 +604,12 @@ h1{
 
 #reglaLight {
   position: absolute;
-  display: none;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease;
   
 }
 
 #reglaShadow{
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease;
 }
 
 
@@ -652,7 +651,7 @@ h1{
   width: 18px;
   height: 17px;
   margin-top: -44px;
-  margin-left: 130px;
+  margin-left: 120px;
   position: absolute;
   box-shadow: inset 0 0 0 1px red, 1px 1px 5px #312e26a6;
   border-radius: 18px;
@@ -939,15 +938,15 @@ footer section{
   padding: 2px;
   position: absolute;
   width: 880px;
-  height: 877px;
+  height: 873px;
   justify-content: center;
   align-items: center;
   margin-top: 10px;
   margin-left: -84px;
   z-index: -1;
   visibility: hidden;
-  transition: opacity 0.3s ease-in;
-  
+  transition: opacity 0.5s ease-in, transform 0.5s ease-in-out, margin-top 0.5s ease, margin-left 0.5s ease, width 0.5s ease, height 0.5s ease;
+
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

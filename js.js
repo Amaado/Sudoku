@@ -4,6 +4,7 @@ let progressBar = document.querySelector('.notification__progress');
 let contenidoNotif = document.querySelector('.notification__body');
 let newIcon = document.querySelector('.notification__icon');
 let isNotificationActive = false;
+var angulo = 0;
 
 function showNotification(contenido, logo, estilo) {
   isNotificationActive = true; // Establecer que la notificación está activa
@@ -1087,15 +1088,25 @@ function botonActivoRegla() {
   var h1 = document.getElementById("h1");
 
   h1.style.marginTop = "0px";
-  regla.style.visibility = "visible";
   regla.style.opacity = 1;
+  regla.style.visibility = "visible";
+
+  regla.style.marginTop = "10px";
+  regla.style.marginLeft = "-84px";
+  regla.style.width = "880px";
+  regla.style.height = "873px";
 
   botonRegla.style.borderColor = "#BDAA7B";
-  reglaLight.style.display = "block";
-  reglaShadow.style.display = "block";
+  reglaLight.style.visibility = "visible";
+  reglaShadow.style.visibility = "hidden";
   reglaLight.style.opacity = 1;
   reglaShadow.style.opacity = 0;
   botonRegla.style.boxShadow = "0px 0px 5px 3px #b4a9876e, inset 0px 0px 5px 3px #b4a9876e";
+
+
+  angulo += 90;
+  reglaShadow.style.transform = `rotate(${angulo}deg)`;
+  reglaLight.style.transform = `rotate(${angulo}deg)`;
 }
 
 function botonInactivoRegla() {
@@ -1105,16 +1116,22 @@ function botonInactivoRegla() {
   var h1 = document.getElementById("h1");
 
   h1.style.removeProperty('margin-top');
-  regla.style.opacity = 0;
+  regla.style.opacity = 1;
+  regla.style.marginTop = "90px";
+  regla.style.marginLeft = "-8px";
+  regla.style.width = "800px";
+  regla.style.height = "780px";
 
   reglaLight.style.opacity = 0;
   reglaShadow.style.opacity = 1;
   botonRegla.style.borderColor = "rgb(29, 28, 28)";
   botonRegla.style.boxShadow = "0px 0px 0px 0px #b4a9876e, inset 0px 0px 0px 0px #b4a9876e";
-  reglaLight.style.display = 'none';
-  reglaShadow.style.display = 'block';
+  reglaLight.style.visibility = "hidden";
+  reglaShadow.style.visibility = "visible";
 
-
+  angulo += 90;
+  reglaShadow.style.transform = `rotate(${angulo}deg)`;
+  reglaLight.style.transform = `rotate(${angulo}deg)`;
 }
 
 
