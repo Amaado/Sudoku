@@ -4,6 +4,7 @@
         <title> Sudoku </title>
         <link rel="icon" href=""/>
         <link rel="stylesheet" type="text/css" href="css.css"/>
+        <script defer src="https://bennettfeely.com/ztext/js/ztext.min.js"></script>
         <script defer src="js.js"></script>
     </head>
     <body>
@@ -14,15 +15,41 @@
                   
                   <caption id="caption">
                      <img id="regla" class="regla" src="img/cuadricula.png" alt="regla">
+
+                     <div class="containerHistorial caja6">
+                        <div class="partida"> </div>                     
+                     </div>
+
+                     <div>
+                        <div id="botonFavoritos">
+                           <img id="botonFavotitosLight" class="img" src="img/estrellaLight.png" alt="Favoritos">
+                           <img id="botonFavotitosShadow" class="img" src="img/estrellaShadow.png" alt="Favoritos">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div id="botonHistorial">
+                           <img id="botonHistorialLight" class="img" src="img/historialLight.png" alt="Historial">
+                           <img id="botonHistorialShadow" class="img" src="img/historialShadow.png" alt="Historial">
+                        </div>
+                     </div>
+
                      <div class="ajustesFlex">
                         
                         <div class="gap"></div>
 
-                        <h1 id="h1"> Sudoku </h1>
+                        <h1 id="h1">
+                           <span data-z data-z-fade="true" data-z-event="pointer">S</span>
+                           <span class="izq" data-z data-z-fade="true" data-z-event="pointer">u</span>
+                           <span  class="izq"data-z data-z-fade="true" data-z-event="pointer">d</span>
+                           <span  class="izq"data-z data-z-fade="true" data-z-event="pointer">o</span>
+                           <span  class="izq"data-z data-z-fade="true" data-z-event="pointer">k</span>
+                           <span  class="izq"data-z data-z-fade="true" data-z-event="pointer">u</span>
+                        </h1>
                         <div class="ajustes no-select">
-                           <div id = "botonAjustes">
-                              <img id = "botonAjustesLight" class="img" src="img/settings_light.png" alt="Settings">
-                              <img id = "botonAjustesShadow" class="img" src="img/settings_shadow.png" alt="Settings">
+                           <div id="botonAjustes">
+                              <img id="botonAjustesLight" class="img" src="img/settings_light.png" alt="Settings">
+                              <img id="botonAjustesShadow" class="img" src="img/settings_shadow.png" alt="Settings">
                            </div>
                            <div class="menu" id="menu">
                               <div id="botonCross" class="button" alt="Cross Assist" type="button">

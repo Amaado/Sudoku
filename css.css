@@ -17,13 +17,40 @@ body {
   background-color: #9D8E73;
   font-family: 'Arial';
   z-index: -1;
+  margin-top: 50px;
 }
 
 h1 {
   text-align: center;
-  font-size: 32px;
-  text-decoration: underline;
-  text-decoration-color: #4a3a07bd;
+  font-size: 45px;
+  color: #c8bda1;
+  gap: 30px;
+  margin-left: 25px;
+  user-select: none;
+  margin-top: 25px;
+  transition: margin-top 0.5s ease;
+  
+}
+
+.izq{
+  margin-left: -10px;
+}
+
+.z-layer:first-child {
+  -webkit-text-stroke: 1px black;
+
+}
+
+.z-text {
+	transform: rotateX(-15deg);
+	transition: transform 1s;
+  
+}
+
+.z-layer:not(:first-child) {
+	color: #655649;
+  -webkit-text-stroke: 1.4px c8bda1;
+  font-size: 46.4;
 }
 
 table {
@@ -32,6 +59,7 @@ table {
   height: 80px;
   text-align: center;
   border: solid rgb(29, 28, 28) 4px;
+  
 }
 
 table,
@@ -39,7 +67,6 @@ td {
   border-collapse: collapse;
   padding: 10;
   height: 80px;
-  
 }
 
 tbody{
@@ -94,13 +121,7 @@ section div {
   margin-top: -5px;
 }
 
-h1{
-  gap: 30px;
-  margin-left: 25px;
-  user-select: none;
-  margin-top: 30px;
-  transition: margin-top 0.5s ease;
-}
+
 
 @media only screen and (max-width: 768px) {
   table {
@@ -168,7 +189,7 @@ h1{
 /* Ajustes --> Contenedor row junto sudoku */
 
 .gap{
-  width: 293px;
+  width: 270px;
   /*background-color: blue;*/
 }
 
@@ -187,8 +208,8 @@ h1{
     width: 40px;
     height: 48%;
     /*background-color: purple;*/
-    top: 115px;
-    left: 330px;
+    top: 210px;
+    left: 295px;
     cursor: default;
     user-select: none;
     
@@ -519,6 +540,59 @@ h1{
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
+}
+
+
+#botonFavoritos {
+  position: absolute;
+  width: 35px;
+  margin-top: 100px;
+  margin-left: 768px;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+
+#botonFavotitosLight {
+  position: absolute;
+  visibility: visible;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  
+}
+
+#botonFavotitosShadow{
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+
+
+#botonHistorial {
+  position: absolute;
+  width: 35px;
+  margin-top: 150px;
+  margin-left: 768px;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+
+#botonHistorialLight {
+  position: absolute;
+  visibility: visible;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  
+}
+
+#botonHistorialShadow{
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 
@@ -952,4 +1026,58 @@ footer section{
   -ms-user-select: none;
   user-select: none;
   -webkit-user-drag: none;
+}
+
+.containerHistorial{
+  border-radius: 20px;
+  display: flex;
+  padding: 2px;
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  visibility: visible;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  background-color: #c2b490e6;
+  -webkit-transition: 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in, transform 0.5s ease-in-out, margin-top 0.5s ease, margin-left 0.5s ease, width 0.5s ease, height 0.5s ease;
+}
+
+
+.partida{
+  transition: opacity 0.5s ease-in, transform 0.5s ease-in-out, margin-top 0.5s ease, margin-left 0.5s ease, width 0.5s ease, height 0.5s ease;
+  background-color: #1d1c1c;
+  width: 80px;
+  height: 30px;
+}
+
+.caja6 {
+  position: absolute;
+  width: 400px;  /* Tamaño inicial */
+  height: 400px; /* Tamaño inicial */
+  transition: all 0.5s ease; /* Suaviza la transición */
+  transform-origin: center; /* Asegura que la transformación sea desde el centro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: -1;
+}
+
+.caja6 div {
+  width: 80%;  /* Uso de porcentajes para ajustar con el tamaño del contenedor */
+  height: 10%;
+  background-color: #ccc;
+  margin: 10px;
+  transition: transform 0.5s ease, border-radius 2s ease-in-out; /* Suaviza la transformación */
+}
+
+.caja6.skew {
+  transform: skewX(10deg) scale(1.5); /* Ejemplo de escalado y inclinación */
 }
