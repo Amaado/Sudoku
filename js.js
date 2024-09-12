@@ -680,6 +680,7 @@ function ForbidenInput(input) {
 
 
 var estadoFav = localStorage.getItem("estadoFav") === "true";
+var botonDisabled = true;  // Iniciar con el botón deshabilitado
 
 document.addEventListener("DOMContentLoaded", function () {
   var boton = document.getElementById("botonFavoritos");
@@ -689,9 +690,18 @@ document.addEventListener("DOMContentLoaded", function () {
   applyButtonState(estadoFav, true);
 
   boton.onclick = function() {
+    if (botonDisabled) return; // Previene que el botón funcione si está deshabilitado
+    botonDisabled = true; // Deshabilita el botón temporalmente
+
     estadoFav = !estadoFav;
     localStorage.setItem("estadoFav", estadoFav);
     applyButtonState(estadoFav, false);
+
+    // Selecciona el tiempo de bloqueo basado en el estado activo o inactivo
+    var timeoutDuration = estadoFav ? 1300 : 500;
+    setTimeout(function() {
+      botonDisabled = false;
+    }, timeoutDuration);
   };
 
   function applyButtonState(active, noTransition) {
@@ -701,14 +711,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (active) {
-      botonFavoritosLight.style.visiblilit = "block";
+      botonFavoritosLight.style.visibility = "visible";
       botonFavoritosLight.style.opacity = 1;
       botonFavoritosLight.style.transform = "translate(0%, 0%) rotate(420deg)";
       botonFavoritosShadow.style.opacity = 0;
       botonFavoritosShadow.style.transform = "translate(0%, 0%) rotate(420deg)";
 
       aplicarSkew();
-
     } else {
       botonFavoritosShadow.style.visibility = "visible";
       botonFavoritosLight.style.opacity = 0;
@@ -726,7 +735,19 @@ document.addEventListener("DOMContentLoaded", function () {
       }, 50);
     }
   }
+
+  // Habilita el botón después de un retraso solo si está activo inicialmente
+  if (estadoFav) {
+    window.onload = function() {
+      setTimeout(function() {
+        botonDisabled = false;
+      }, 700);
+    };
+  } else {
+    botonDisabled = false; // Si no está activo, no se aplica el delay
+  }
 });
+
 
 
 
@@ -1681,24 +1702,39 @@ imageContainer.addEventListener('mouseout', () => {
 
 var caja = document.querySelector('.caja6');
 
-function aplicarSkew() {
-  caja.style.transform = 'skewX(40deg)';
-  caja.style.width = "5px";
-  caja.style.height = "5px";
-  caja.style.marginTop = '95px';
-  caja.style.marginLeft = '790px';
-  caja.style.opacity = 0;
-  caja.style.visibility = "hidden";
-  caja.style.borderRadius = '0px';
+function revertirSkew() {
+
+    caja.style.width = "5px";
+    caja.style.height = "5px";
+    caja.style.marginTop = '95px';
+    caja.style.marginLeft = '820px';
+    caja.style.opacity = 0;
+    caja.style.visibility = "hidden";
+    caja.style.borderRadius = '0px';
+
+  
 }
 
-function revertirSkew() {
-  caja.style.transform = 'none';
-  caja.style.width = "400px";
-  caja.style.height = "400px";
-  caja.style.marginTop = '100px';
-  caja.style.marginLeft = '850px';
-  caja.style.opacity = 1;
-  caja.style.visibility = "visible";
-  caja.style.borderRadius = '20px'
+  function aplicarSkew() {
+
+      caja.style.width = "410px";
+      caja.style.height = "410px";
+      caja.style.marginTop = '100px';
+      caja.style.marginLeft = '850px';
+      caja.style.opacity = 1;
+      caja.style.visibility = "visible";
+      caja.style.borderRadius = '20px';
+    
+      setTimeout(() => {
+        caja.style.width = "397px";
+        caja.style.height = "397px";
+      }, 500);
+    
+      setTimeout(() => {
+        caja.style.width = "400px";
+        caja.style.height = "400px";
+      }, 800);
+    
+  
 }
+
