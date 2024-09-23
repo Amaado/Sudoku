@@ -3,11 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>Reloj de Arena</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <link rel="stylesheet" type="text/css" href="arena.css"/>
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <button onclick="resetSand()">Dar la vuelta al reloj de arena</button>
-  <script src="sketch.js"></script>
+  <div id="hourglass" class="ready">
+    <div class="glass">
+      <div class="sand top"></div>
+    </div>
+    <div class="glass bottom">
+        <div class="sand bottom"></div>
+    </div>
+  </div>
+   
+  <br/>
+   <div>
+    <label>0%</label>
+    <input type="range" value="100" name="fullness" id="input-fullness" min="0" max="100">
+    <label>100%</label>
+    </div>
+  
+  <br/>
+  <input type="button" value="Flip at 0%" id="input-flip">
+  <input type="button" value="Click" id="buttonReal">
 </body>
 </html>
-
