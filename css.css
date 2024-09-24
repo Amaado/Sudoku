@@ -1133,7 +1133,7 @@ footer section{
   border-bottom-left-radius:50% 70%;
   border-bottom-right-radius:50% 70%;
   background-color:transparent;
-  box-shadow:0 10px 0 rgba(222, 192, 135, 1);
+  box-shadow:0 10px 0 #ceb789;
   animation: kfSandTop 2000ms ease-in-out infinite;
   transition: box-shadow 1s ease;
 
@@ -1163,7 +1163,7 @@ footer section{
 }
 
 .sand.activo {
-  background-color: rgba(222, 192, 135, 1); /* Color cuando está activo */
+  background-color: #ceb789; /* Color cuando está activo */
 }
 
 .sand.inactivo {
@@ -1195,7 +1195,7 @@ footer section{
 .glass.bottom.activo:before{
   position:absolute;
   content:"";
-  background-color:rgba(222, 192, 135, 1);
+  background-color: #ceb789;
   height:98%;
   width:3px;
   bottom:0;
@@ -1267,8 +1267,4 @@ footer section{
 
 #input-fullness{
   display: none;
-}
-
-#input-flip{
-  /*display: none;*/
 }

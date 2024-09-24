@@ -1837,7 +1837,7 @@ function setInitialSand(isActive) {
 
 // Funciones para activar/inactivar el botón
 function botonActivoHist() {
-    console.log("Botón activo");
+    //console.log("Botón activo");
     sandTop.classList.add("activo");
     sandTop.classList.remove("inactivo");
     sandBottom.classList.add("activo");
@@ -1847,7 +1847,7 @@ function botonActivoHist() {
 }
 
 function botonInactivoHist() {
-    console.log("Botón inactivo");
+    //console.log("Botón inactivo");
     sandTop.classList.add("inactivo");
     sandTop.classList.remove("activo");
     sandBottom.classList.add("inactivo");
