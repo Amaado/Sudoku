@@ -1738,3 +1738,120 @@ function revertirSkew() {
   
 }
 
+
+//HOURGLASS
+
+let inputFullness = document.getElementById("input-fullness");
+let inputFlip = document.getElementById("hourglass");
+let sandTop = document.querySelector('.sand.top');
+let sandBottom = document.querySelector('.sand.bottom'); 
+let glassBottom = document.querySelector('.glass.bottom');
+
+// Manejadores de eventos
+inputFullness.addEventListener("change", (e) => setSandFullness(e.target.value));
+inputFlip.addEventListener("click", flip);
+
+// Función para establecer el llenado de arena
+function setSandFullness(percent) {
+    sandTop.style.height = `${percent}%`;
+    sandBottom.style.height = `${100 - percent}%`;
+    inputFullness.value = percent;
+}
+
+// Función para manejar el flip del hourglass
+function flip() {
+    let estadoHist = localStorage.getItem("estadoHist") === "true"; // Convertir a booleano
+    estadoHist = !estadoHist; // Cambiar estado
+    localStorage.setItem("estadoHist", estadoHist); // Almacenar nuevo estado
+
+    // Actualizar UI según el estado
+    if (estadoHist) {
+        botonActivoHist();
+    } else {
+        botonInactivoHist();
+    }
+
+    // Prevenir múltiples clics
+    inputFlip.removeEventListener("click", flip);
+    
+    // Iniciar animación del hourglass
+    document.getElementById("hourglass").classList.add("flip");
+    document.getElementById("hourglass").classList.remove("ready");
+
+    setTimeout(() => {
+        setSandFullness(100); // Llenar la arena en el estado activo
+        document.getElementById("hourglass").classList.remove("flip");
+
+        setTimeout(() => {
+            document.getElementById("hourglass").classList.add("ready");
+
+            let currentPercent = 100;
+            const intervalDuration = 5; 
+            const totalTime = 400; 
+            const steps = totalTime / intervalDuration; 
+            const decrementPerStep = 100 / steps; 
+
+            const interval = setInterval(() => {
+                if (currentPercent <= 0) {
+                    clearInterval(interval); 
+                    setSandFullness(0);
+                    inputFlip.addEventListener("click", flip); // Rehabilitar el botón
+                    return;
+                }
+                currentPercent -= decrementPerStep;
+                setSandFullness(currentPercent);
+            }, intervalDuration);
+        }, 50);
+    }, 350);
+}
+
+// Carga inicial
+window.onload = function() {
+    let estadoHist = localStorage.getItem("estadoHist");
+    if (estadoHist === null) {
+        estadoHist = "true"; // Valor por defecto (cadena, no booleano)
+        localStorage.setItem("estadoHist", estadoHist);
+    }
+
+    estadoHist = estadoHist === "true"; // Convertir a booleano
+
+    // Actualizar estado del botón
+    if (estadoHist) {
+        botonActivoHist();
+    } else {
+        botonInactivoHist();
+    }
+
+    // Establecer el llenado inicial de la arena
+    setInitialSand(estadoHist);
+};
+
+// Función para establecer el estado inicial de la arena
+function setInitialSand(isActive) {
+    if (isActive) {
+        setSandFullness(0); // Arena completamente llena
+    } else {
+        setSandFullness(0);   // Arena vacía
+    }
+}
+
+// Funciones para activar/inactivar el botón
+function botonActivoHist() {
+    console.log("Botón activo");
+    sandTop.classList.add("activo");
+    sandTop.classList.remove("inactivo");
+    sandBottom.classList.add("activo");
+    sandBottom.classList.remove("inactivo");
+    glassBottom.classList.add("activo");
+    glassBottom.classList.remove("inactivo");
+}
+
+function botonInactivoHist() {
+    console.log("Botón inactivo");
+    sandTop.classList.add("inactivo");
+    sandTop.classList.remove("activo");
+    sandBottom.classList.add("inactivo");
+    sandBottom.classList.remove("activo");
+    glassBottom.classList.add("inactivo");
+    glassBottom.classList.remove("activo");
+}

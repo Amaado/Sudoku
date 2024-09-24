@@ -27,19 +27,30 @@ function flip() {
     setSandFullness(100);
     document.getElementById("hourglass").classList.remove("flip");
 
-    setTimeout(() => document.getElementById("hourglass").classList.add("ready"), 100);
-  }, 1100);
+    setTimeout(() => {
+      document.getElementById("hourglass").classList.add("ready");
+
+      let currentPercent = 100;
+      let intervalDuration = 5; // Intervalo de tiempo en milisegundos
+      let totalTime = 400; // Duración total en milisegundos
+      let steps = totalTime / intervalDuration; // Total de pasos
+      let decrementPerStep = 100 / steps; // Cantidad de decremento en cada paso
+
+      const interval = setInterval(() => {
+        if (currentPercent <= 0) {
+          clearInterval(interval); // Detén el intervalo cuando llegue a 0
+          setSandFullness(0);
+          return;
+        }
+        currentPercent -= decrementPerStep;
+        setSandFullness(currentPercent); // Actualiza el llenado de arena
+      }, intervalDuration); // Cada iteración ocurre cada 5 ms
+    }, 100);
+  }, 350);
 }
 
 function setInitialSand() {
-  inputFullness.value = 0;
   setSandFullness(0);
-  
-  const interval = setInterval(() => {
-    if (inputFullness.value < 0) {
-      inputFullness.value = inputFullness.value-1;
-    }    
-  }, 5);
 }
 
 window.onload = function() {
