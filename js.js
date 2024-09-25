@@ -1801,7 +1801,7 @@ function flip() {
                 currentPercent -= decrementPerStep;
                 setSandFullness(currentPercent);
             }, intervalDuration);
-        }, 50);
+        }, 20);
     }, 350);
 }
 
